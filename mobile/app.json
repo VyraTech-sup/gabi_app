@@ -1,0 +1,62 @@
+{
+  "expo": {
+    "name": "All Mind",
+    "slug": "all-mind",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "newArchEnabled": false,
+    "jsEngine": "hermes",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FAFAF8"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.vyratech.allmind",
+      "infoPlist": {
+        "UIBackgroundModes": [
+          "audio"
+        ]
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FAFAF8"
+      },
+      "permissions": [
+        "AUDIO_SETTINGS",
+        "RECEIVE_BOOT_COMPLETED",
+        "VIBRATE",
+        "WAKE_LOCK"
+      ],
+      "package": "com.vyratech.allmind"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icon.png",
+          "color": "#8B7355"
+        }
+      ],
+      "@react-native-community/datetimepicker"
+    ],
+    "notification": {
+      "icon": "./assets/icon.png",
+      "color": "#8B7355"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "db76ce10-369f-4780-95fc-113782270fe4"
+      }
+    }
+  }
+}
