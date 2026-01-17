@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "AlmaSense",
-    "slug": "almasense",
+    "slug": "all-mind",
     "version": "1.0.0",
     "orientation": "portrait",
     "newArchEnabled": false,
@@ -62,7 +62,6 @@
         "projectId": "db76ce10-369f-4780-95fc-113782270fe4"
       }
     },
-    "privacy": "https://almasense.vercel.app/privacy",
-    "termsOfServiceUrl": "https://almasense.vercel.app/terms"
+    "owner": "vyratech"
   }
 }
