@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "All Mind",
-    "slug": "all-mind",
+    "name": "AlmaSense",
+    "slug": "almasense",
     "version": "1.0.0",
     "orientation": "portrait",
     "newArchEnabled": false,
@@ -11,29 +11,32 @@
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#FAFAF8"
+      "backgroundColor": "#3A5A6C"
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.vyratech.allmind",
+      "bundleIdentifier": "com.vyratech.almasense",
+      "buildNumber": "1",
       "infoPlist": {
         "UIBackgroundModes": [
           "audio"
-        ]
+        ],
+        "NSUserTrackingUsageDescription": "Este app não rastreia seus dados."
+      },
+      "config": {
+        "usesNonExemptEncryption": false
       }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FAFAF8"
+        "backgroundColor": "#3A5A6C"
       },
       "permissions": [
-        "AUDIO_SETTINGS",
-        "RECEIVE_BOOT_COMPLETED",
-        "VIBRATE",
         "WAKE_LOCK"
       ],
-      "package": "com.vyratech.allmind"
+      "package": "com.vyratech.almasense",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png",
@@ -44,19 +47,22 @@
         "expo-notifications",
         {
           "icon": "./assets/icon.png",
-          "color": "#8B7355"
+          "color": "#3A5A6C"
         }
       ],
-      "@react-native-community/datetimepicker"
+      "@react-native-community/datetimepicker",
+      "react-native-iap"
     ],
     "notification": {
       "icon": "./assets/icon.png",
-      "color": "#8B7355"
+      "color": "#3A5A6C"
     },
     "extra": {
       "eas": {
         "projectId": "db76ce10-369f-4780-95fc-113782270fe4"
       }
-    }
+    },
+    "privacy": "https://almasense.vercel.app/privacy",
+    "termsOfServiceUrl": "https://almasense.vercel.app/terms"
   }
 }

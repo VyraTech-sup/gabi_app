@@ -63,11 +63,11 @@ export default function UnlockAlmaSenseScreen({ navigation }: UnlockAlmaSenseScr
   };
 
   const openTerms = () => {
-    Linking.openURL('https://www.example.com/terms');
+    Linking.openURL('https://almasense.vercel.app/terms');
   };
 
   const openPrivacy = () => {
-    Linking.openURL('https://www.example.com/privacy');
+    Linking.openURL('https://almasense.vercel.app/privacy');
   };
 
   return (
@@ -113,20 +113,29 @@ export default function UnlockAlmaSenseScreen({ navigation }: UnlockAlmaSenseScr
           title="Mensal"
           price="R$ 29,90"
           period="/ mês"
-          subtitle="Cancele a qualquer momento"
+          subtitle="Renovação automática mensal"
           isSelected={selectedPlan === 'monthly'}
           onPress={() => setSelectedPlan('monthly')}
         />
         
         <PlanCard
           title="Anual"
-          price="R$ 399,00"
+          price="R$ 299,90"
           period="/ ano"
-          subtitle="Cancele a qualquer momento"
+          subtitle="Renovação automática anual"
           isSelected={selectedPlan === 'yearly'}
           onPress={() => setSelectedPlan('yearly')}
-          badge="Melhor valor"
+          badge="Economize 16%"
         />
+      </View>
+
+      {/* Compliance Text */}
+      <View style={styles.complianceSection}>
+        <Text style={styles.complianceText}>
+          A assinatura renova automaticamente até o cancelamento. 
+          Cancele a qualquer momento em Ajustes → Assinaturas (iOS) ou 
+          Google Play → Assinaturas (Android). Sem reembolso após consumo do conteúdo.
+        </Text>
       </View>
 
       {/* Botão Assinar */}
@@ -380,6 +389,16 @@ const styles = StyleSheet.create({
   subscribeSection: {
     paddingHorizontal: theme.spacing.xl,
     marginBottom: theme.spacing.lg,
+  },
+  complianceSection: {
+    paddingHorizontal: theme.spacing.xl,
+    marginBottom: theme.spacing.lg,
+  },
+  complianceText: {
+    fontSize: theme.typography.fontSize.xs,
+    color: theme.colors.textSecondary,
+    textAlign: 'center',
+    lineHeight: 16,
   },
   promoLink: {
     alignSelf: 'center',
