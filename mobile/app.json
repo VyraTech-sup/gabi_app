@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "AlmaSense",
+    "name": "All Mind",
     "slug": "all-mind",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -19,6 +19,7 @@
       "buildNumber": "1",
       "infoPlist": {
         "UIBackgroundModes": [
+          "audio",
           "audio"
         ],
         "NSUserTrackingUsageDescription": "Este app não rastreia seus dados."
@@ -33,10 +34,14 @@
         "backgroundColor": "#3A5A6C"
       },
       "permissions": [
+        "WAKE_LOCK",
         "WAKE_LOCK"
       ],
       "package": "com.vyratech.almasense",
-      "versionCode": 1
+      "versionCode": 1,
+      "minSdkVersion": 24,
+      "targetSdkVersion": 34,
+      "compileSdkVersion": 34
     },
     "web": {
       "favicon": "./assets/favicon.png",
@@ -50,8 +55,7 @@
           "color": "#3A5A6C"
         }
       ],
-      "@react-native-community/datetimepicker",
-      "react-native-iap"
+      "@react-native-community/datetimepicker"
     ],
     "notification": {
       "icon": "./assets/icon.png",
@@ -62,6 +66,12 @@
         "projectId": "db76ce10-369f-4780-95fc-113782270fe4"
       }
     },
-    "owner": "vyratech"
+    "owner": "vyratech",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/db76ce10-369f-4780-95fc-113782270fe4"
+    }
   }
 }

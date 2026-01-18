@@ -8,7 +8,7 @@ import { RootStackParamList } from '../../navigation/types';
 import { useAuth } from '../../contexts/AuthContext';
 
 interface HomeScreenProps {
-  navigation: NativeStackNavigationProp<RootStackParamList>;
+  navigation: any;
 }
 
 // Mock de Stories

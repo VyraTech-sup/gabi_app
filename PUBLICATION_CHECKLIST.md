@@ -13,8 +13,8 @@
 | **Version** | ✅ Completo | ❌ Sim | `1.0.0` |
 | **Build Number iOS** | ✅ Completo | ❌ Sim | `1` |
 | **Version Code Android** | ✅ Completo | ❌ Sim | `1` |
-| **Nome do App** | ✅ Completo | ❌ Sim | `AlmaSense` |
-| **Slug** | ✅ Completo | ❌ Não | `almasense` |
+| **Nome do App** | ✅ Completo | ❌ Sim | `All Mind` |
+| **Slug** | ✅ Completo | ❌ Não | `all-mind` |
 | **Icon (1024x1024)** | ✅ Completo | ❌ Sim | `assets/icon.png` |
 | **Adaptive Icon Android** | ✅ Completo | ❌ Sim | `assets/adaptive-icon.png` |
 | **Splash Screen** | ✅ Completo | ❌ Sim | `assets/splash-icon.png` |
@@ -167,7 +167,7 @@
 | **Vercel Production** | ✅ Completo | ⚠️ Opcional | https://dist-smoky-eta-61.vercel.app |
 | **Privacy page deployed** | ✅ Completo | ❌ Sim | https://almasense.vercel.app/privacy |
 | **Terms page deployed** | ✅ Completo | ❌ Sim | https://almasense.vercel.app/terms |
-| **Home page AlmaSense** | ✅ Completo | ⚠️ Opcional | Story-first design |
+| **Home page All Mind** | ✅ Completo | ⚠️ Opcional | Story-first design |
 
 ---
 
@@ -262,7 +262,7 @@ Estes bloqueiam a publicação até serem resolvidos:
 ---
 
 **Gerado em:** Janeiro 2025  
-**Projeto:** AlmaSense - App de Bem-Estar Mental  
+**Projeto:** All Mind - App de Bem-Estar Mental  
 **Versão:** 1.0.0 (Build 1)  
 **Engenheiro Responsável:** Principal Mobile Engineer  
 **Status Geral:** ✅ **83% COMPLETO** - Pronto para ações externas (contas desenvolvedor)

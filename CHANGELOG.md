@@ -25,7 +25,7 @@ mobile/
 ### 🎨 Estilos (1 arquivo)
 ```
 mobile/styles/
-└── theme.ts                ✨ Tema global Almasense
+└── theme.ts                ✨ Tema global All Mind
 ```
 
 ### 🧭 Navegação (1 arquivo)

@@ -1,4 +1,4 @@
-# 🚀 QUICK START GUIDE - Almasense Mobile
+# 🚀 QUICK START GUIDE - All Mind Mobile
 
 ## ⚡ Como começar em 3 minutos
 
@@ -37,7 +37,7 @@ npm start
 ## 🎯 Principais Features Implementadas
 
 ✅ **Navegação fluida** entre telas  
-✅ **Design consistente** com tema Almasense  
+✅ **Design consistente** com tema All Mind  
 ✅ **Estados vazios** e loading  
 ✅ **Mock data** funcionando  
 ✅ **Componentes reutilizáveis**  

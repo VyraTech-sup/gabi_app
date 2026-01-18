@@ -1,11 +1,11 @@
 /**
  * Serviço de In-App Purchase para iOS e Android
- * Implementação REAL usando react-native-iap
- * Gerencia compras via Apple In-App Purchase e Google Play Billing
+ * TEMPORARIAMENTE DESABILITADO - react-native-iap removido para build local
+ * Implementação será reativada quando publicar na loja
  */
 
 import { Platform, Alert } from 'react-native';
-import * as RNIap from 'react-native-iap';
+// import * as RNIap from 'react-native-iap';
 import { SubscriptionPlan } from '../types';
 
 // IDs dos produtos (devem ser cadastrados no App Store Connect e Google Play Console)
@@ -35,6 +35,9 @@ let purchaseErrorSubscription: any = null;
  * DEVE ser chamado no App.tsx antes de qualquer compra
  */
 export const initializePurchases = async (): Promise<boolean> => {
+  console.log('⚠️ IAP desabilitado - modo preview');
+  return true;
+  /*
   try {
     // Conecta ao Google Play / App Store
     await RNIap.initConnection();
@@ -70,6 +73,7 @@ export const initializePurchases = async (): Promise<boolean> => {
     console.error('❌ IAP initialization failed:', error);
     return false;
   }
+  */
 };
 
 /**
@@ -77,6 +81,8 @@ export const initializePurchases = async (): Promise<boolean> => {
  * Chamar quando o app for desmontado
  */
 export const disconnectPurchases = async (): Promise<void> => {
+  console.log('⚠️ IAP desabilitado - modo preview');
+  /*
   if (purchaseUpdateSubscription) {
     purchaseUpdateSubscription.remove();
     purchaseUpdateSubscription = null;
@@ -86,6 +92,7 @@ export const disconnectPurchases = async (): Promise<void> => {
     purchaseErrorSubscription = null;
   }
   await RNIap.endConnection();
+  */
 };
 
 /**
@@ -93,6 +100,9 @@ export const disconnectPurchases = async (): Promise<void> => {
  * Retorna preços reais configurados no App Store / Google Play
  */
 export const getProducts = async () => {
+  console.log('⚠️ IAP desabilitado - modo preview');
+  return [];
+  /*
   try {
     const productIds = [PRODUCT_IDS.monthly, PRODUCT_IDS.yearly];
     
@@ -105,6 +115,7 @@ export const getProducts = async () => {
     console.error('❌ Failed to load products:', error);
     return [];
   }
+  */
 };
 
 /**
@@ -112,6 +123,9 @@ export const getProducts = async () => {
  * OBRIGATÓRIO pela Apple - deve haver botão "Restaurar Compras"
  */
 export const restorePurchases = async (): Promise<PurchaseResult> => {
+  console.log('⚠️ IAP desabilitado - modo preview');
+  return { success: false, error: 'IAP desabilitado' };
+  /*
   try {
     const purchases = await RNIap.getAvailablePurchases();
     
@@ -137,6 +151,7 @@ export const restorePurchases = async (): Promise<PurchaseResult> => {
       error: 'Erro ao restaurar compras',
     };
   }
+  */
 };
 
 /**
@@ -146,6 +161,9 @@ export const restorePurchases = async (): Promise<PurchaseResult> => {
 export const purchaseSubscription = async (
   plan: SubscriptionPlan
 ): Promise<PurchaseResult> => {
+  console.log('⚠️ IAP desabilitado - modo preview');
+  return { success: false, error: 'IAP desabilitado' };
+  /*
   try {
     // Plano gratuito não requer compra
     if (plan === 'free') {
@@ -204,6 +222,7 @@ export const purchaseSubscription = async (
       error: error.message || 'Erro ao processar compra',
     };
   }
+  */
 };
 
 /**
@@ -211,6 +230,9 @@ export const purchaseSubscription = async (
  * Consulta diretamente nas lojas
  */
 export const checkSubscriptionStatus = async (): Promise<boolean> => {
+  console.log('⚠️ IAP desabilitado - modo preview');
+  return false;
+  /*
   try {
     const purchases = await RNIap.getAvailablePurchases();
     
@@ -220,4 +242,5 @@ export const checkSubscriptionStatus = async (): Promise<boolean> => {
     console.error('❌ Check subscription failed:', error);
     return false;
   }
+  */
 };

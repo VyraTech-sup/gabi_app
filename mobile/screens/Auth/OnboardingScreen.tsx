@@ -102,21 +102,70 @@ export default function OnboardingScreen() {
       );
     }
     
+    // ensure video plays when entering step 2 and advances when finishes
+    useEffect(() => {
+      const play = async () => {
+        try {
+          if (videoRef.current) {
+            // start playback
+            // @ts-ignore -- Expo Video methods
+            await videoRef.current.playAsync?.();
+          }
+        } catch (e) {
+          // silent
+        }
+      };
+
+      const pause = async () => {
+        try {
+          if (videoRef.current) {
+            // @ts-ignore
+            await videoRef.current.pauseAsync?.();
+          }
+        } catch (e) {
+          // silent
+        }
+      };
+
+      if (step === 2) {
+        play();
+      } else {
+        pause();
+      }
+
+      return () => { pause(); };
+    }, [step]);
+
+    const handlePlaybackStatus = (status: AVPlaybackStatus) => {
+      // advance when video finished
+      // some status shapes may not have didJustFinish
+      // @ts-ignore
+      if (status && (status as any).didJustFinish) {
+        setStep(3);
+      }
+    };
+
     return (
       <View style={styles.fullScreen}>
         <Video
           ref={videoRef}
           source={require('../../assets/onboarding/onboarding-02-video.mp4')}
-          style={styles.fullScreen}
+          style={[styles.fullScreen, { backgroundColor: '#000' }]}
           resizeMode={ResizeMode.COVER}
-          shouldPlay={false}
           isLooping={false}
+          shouldPlay={true}
+          isMuted={true}
+          useNativeControls={false}
+          onPlaybackStatusUpdate={handlePlaybackStatus}
+          onError={(error) => { console.warn('Onboarding video error:', error); }}
+          onLoad={() => { console.log('Onboarding video loaded'); }}
+          progressUpdateIntervalMillis={1000}
         />
         <View style={styles.navControls}>
-          <TouchableOpacity onPress={() => setStep(1)} style={styles.navButton}>
+          <TouchableOpacity onPress={async () => { try { await videoRef.current?.pauseAsync(); } catch {} setStep(1); }} style={styles.navButton}>
             <Text style={styles.navText}>←</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => setStep(3)} style={styles.navButton}>
+          <TouchableOpacity onPress={async () => { try { await videoRef.current?.pauseAsync(); } catch {} setStep(3); }} style={styles.navButton}>
             <Text style={styles.navText}>→</Text>
           </TouchableOpacity>
         </View>

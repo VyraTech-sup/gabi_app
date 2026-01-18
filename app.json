@@ -4,6 +4,9 @@
       "eas": {
         "projectId": "181467a8-4a2f-42c9-95b1-5b3412be10e9"
       }
+    },
+    "android": {
+      "package": "com.vyratech.mobile"
     }
   }
 }

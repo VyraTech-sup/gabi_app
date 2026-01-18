@@ -1,4 +1,4 @@
-# 🎯 Resumo Executivo - AlmaSense Publication Ready
+# 🎯 Resumo Executivo - All Mind Publication Ready
 
 ## Status: ✅ **83% COMPLETO** - Pronto para Ações Externas
 
@@ -34,7 +34,7 @@
 
 ### 3. Configuração Técnica (100% Completo)
 - ✅ [app.json](c:\dev\gabi_app\mobile\app.json) compliance:
-  - Nome: `AlmaSense`
+  - Nome: `All Mind`
   - Bundle ID: `com.vyratech.almasense` (iOS + Android)
   - Build Number: `1` (iOS)
   - Version Code: `1` (Android)
@@ -48,7 +48,7 @@
 
 ### 4. Web Deployment (100% Completo)
 - ✅ Vercel Production: https://dist-smoky-eta-61.vercel.app
-- ✅ Home page AlmaSense Story-first
+- ✅ Home page All Mind Story-first
 - ✅ Privacy e Terms hospedados
 
 ### 5. Documentação (100% Completo)
@@ -133,7 +133,7 @@
 ### Fase 2: In-App Purchase Setup (1 dia)
 ```
 iOS:
-1. Criar Subscription Group "AlmaSense Premium"
+1. Criar Subscription Group "All Mind Premium"
 2. Criar produto "Monthly" - R$ 29,90/mês (auto-renewal)
 3. Criar produto "Yearly" - R$ 299,90/ano (auto-renewal)
 4. Configurar preços regionais
@@ -272,7 +272,7 @@ cd client && vercel --prod
 
 ## ✅ CONCLUSÃO
 
-O projeto AlmaSense está **tecnicamente pronto** para publicação nas lojas.
+O projeto All Mind está **tecnicamente pronto** para publicação nas lojas.
 
 **Todas as implementações internas foram concluídas:**
 - ✅ Monetização real com react-native-iap

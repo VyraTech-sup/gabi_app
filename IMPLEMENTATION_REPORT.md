@@ -30,7 +30,7 @@ mobile/
 
 **Arquivo criado:** `mobile/styles/theme.ts`
 
-- ✅ Paleta de cores Almasense (tons terrosos e orgânicos)
+-- ✅ Paleta de cores All Mind (tons terrosos e orgânicos)
 - ✅ Tipografia padronizada (8 tamanhos, 6 pesos)
 - ✅ Espaçamentos consistentes (8 valores)
 - ✅ Border radius (6 variações)
@@ -157,7 +157,7 @@ Onboarding (4 slides) → Login/Register → App Principal (tabs)
 
 ## 🎨 CONSISTÊNCIA VISUAL GARANTIDA
 
-### Tema Almasense Aplicado:
+### Tema All Mind Aplicado:
 
 ✅ **Cores consistentes** em todas as telas  
 ✅ **Tipografia padronizada** (tamanhos e pesos)  
