@@ -4,6 +4,7 @@
  */
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { signInWithGoogle } from '../services/googleAuth';
 import {
   getUserData,
   saveUserData,
@@ -17,6 +18,8 @@ import {
   setSubscriptionData,
   getLastStoryDate,
   setLastStoryDate,
+  getTrialUsed,
+  setTrialUsed,
   UserData,
 } from '../services/storage';
 import { SubscriptionPlan, SubscriptionStatus } from '../types';
@@ -42,6 +45,7 @@ interface AuthContextData {
   activateSubscription: (plan: SubscriptionPlan) => Promise<void>;
   markStoryWatched: () => Promise<void>;
   canWatchTodayStory: () => boolean;
+  signInWithGoogle: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -118,6 +122,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       
       setUser(mockUser);
       setIsAuthenticatedState(true);
+      // Inicia trial automaticamente ao registrar, se disponível
+      try {
+        await startTrial();
+      } catch (err) {
+        // não bloquear o fluxo de registro se o trial falhar
+      }
     } catch (error) {
       console.error('Erro ao fazer login:', error);
       throw new Error('Erro ao fazer login');
@@ -213,6 +223,41 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   };
 
+  const startTrial = async (): Promise<boolean> => {
+    try {
+      const alreadyUsed = await getTrialUsed();
+      if (alreadyUsed) return false;
+
+      const startDate = new Date();
+      const endDate = new Date(startDate.getTime() + 7 * 24 * 60 * 60 * 1000);
+
+      const subData = {
+        plan: 'free' as SubscriptionPlan,
+        status: 'active' as SubscriptionStatus,
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
+      };
+
+      await setSubscriptionData(subData);
+      await setPremiumStatus(true);
+      await setTrialUsed(true);
+
+      setSubscriptionPlan('free');
+      setSubscriptionStatus('active');
+
+      if (user) {
+        const updatedUser = { ...user, isPremium: true };
+        await saveUserData(updatedUser);
+        setUser(updatedUser);
+      }
+
+      return true;
+    } catch (error) {
+      console.error('Erro ao iniciar trial:', error);
+      return false;
+    }
+  };
+
   const markStoryWatched = async () => {
     try {
       const today = new Date().toISOString().split('T')[0];
@@ -228,6 +273,28 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     
     const today = new Date().toISOString().split('T')[0];
     return lastStoryDate !== today;
+  };
+
+  // Login Google OAuth
+  const signInWithGoogleHandler = async () => {
+    try {
+      const result = await signInWithGoogle();
+      const googleUser = {
+        id: result.user.email, // ou outro identificador único
+        name: result.user.name,
+        email: result.user.email,
+        isPremium: false,
+        createdAt: new Date().toISOString(),
+        avatar: result.user.picture,
+      };
+      await saveUserData(googleUser);
+      await setAuthenticated(true);
+      setUser(googleUser);
+      setIsAuthenticatedState(true);
+    } catch (error) {
+      console.error('Erro no login Google:', error);
+      throw error;
+    }
   };
 
   return (
@@ -250,6 +317,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         activateSubscription,
         markStoryWatched,
         canWatchTodayStory,
+        signInWithGoogle: signInWithGoogleHandler,
       }}
     >
       {children}

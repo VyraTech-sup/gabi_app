@@ -12,6 +12,7 @@ const STORAGE_KEYS = {
   IS_AUTHENTICATED: '@allmind:is_authenticated',
   IS_PREMIUM: '@allmind:is_premium',
   SUBSCRIPTION_DATA: '@allmind:subscription_data',
+  TRIAL_USED: '@allmind:trial_used',
   LAST_STORY_DATE: '@allmind:last_story_date',
   NOTIFICATION_TIME: '@allmind:notification_time',
   FAVORITES: '@allmind:favorites',
@@ -251,6 +252,25 @@ export const getSubscriptionData = async (): Promise<{ plan: string; status: str
   }
 };
 
+// Trial usage tracking (para evitar múltiplos trials)
+export const setTrialUsed = async (used: boolean): Promise<void> => {
+  try {
+    await AsyncStorage.setItem(STORAGE_KEYS.TRIAL_USED, JSON.stringify(used));
+  } catch (error) {
+    console.error('Erro ao salvar flag de trial:', error);
+  }
+};
+
+export const getTrialUsed = async (): Promise<boolean> => {
+  try {
+    const value = await AsyncStorage.getItem(STORAGE_KEYS.TRIAL_USED);
+    return value ? JSON.parse(value) : false;
+  } catch (error) {
+    console.error('Erro ao buscar flag de trial:', error);
+    return false;
+  }
+};
+
 // Last Story Date
 export const setLastStoryDate = async (date: string): Promise<void> => {
   try {
@@ -276,4 +296,17 @@ export const clearAllData = async (): Promise<void> => {
   } catch (error) {
     console.error('Erro ao limpar todos os dados:', error);
   }
+};
+
+// Função para criar conta de teste
+export const createTestUser = async () => {
+  const testUser = {
+    id: 'test-reviewer',
+    name: 'Test Reviewer',
+    email: 'testreviewer@yourapp.com',
+    isPremium: true,
+    createdAt: new Date().toISOString(),
+  };
+  await saveUserData(testUser);
+  await setAuthenticated(true);
 };
