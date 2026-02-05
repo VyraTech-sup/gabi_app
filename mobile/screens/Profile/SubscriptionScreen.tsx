@@ -89,6 +89,17 @@ export default function SubscriptionScreen({ navigation }: SubscriptionScreenPro
     return () => { mounted = false; };
   }, []);
 
+  const confirmAndBuy = () => {
+    Alert.alert(
+      '7 dias grátis',
+      'Você terá 7 dias grátis. Após o período, a cobrança será iniciada automaticamente. Deseja continuar?',
+      [
+        { text: 'Cancelar', style: 'cancel' },
+        { text: 'Continuar', onPress: () => handleBuy() },
+      ]
+    );
+  };
+
   const handleBuy = async () => {
     if (availablePackages.length === 0) {
       Alert.alert('Erro', 'Nenhuma oferta disponível no momento. Tente novamente mais tarde.');

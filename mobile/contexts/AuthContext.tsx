@@ -85,7 +85,19 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       
       if (subData) {
         setSubscriptionPlan(subData.plan as SubscriptionPlan);
-        setSubscriptionStatus(subData.status as SubscriptionStatus);
+        // Check expiration
+        if (subData.endDate) {
+          const end = new Date(subData.endDate).getTime();
+          if (!isNaN(end) && end < Date.now()) {
+            // expired
+            setSubscriptionStatus('expired');
+            await setPremiumStatus(false);
+          } else {
+            setSubscriptionStatus(subData.status as SubscriptionStatus);
+          }
+        } else {
+          setSubscriptionStatus(subData.status as SubscriptionStatus);
+        }
       }
     } catch (error) {
       console.error('Erro ao carregar estado:', error);
