@@ -201,7 +201,7 @@ npm start
 
 ## 🎉 Conclusão
 
-O aplicativo Almasense Mobile foi **completamente reestruturado e implementado** com:
+O aplicativo All Mind Mobile foi **completamente reestruturado e implementado** com:
 
 ✅ 15 telas funcionais  
 ✅ Sistema de design completo  

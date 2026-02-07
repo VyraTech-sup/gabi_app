@@ -59,7 +59,7 @@ export default function Button({
 
 const styles = StyleSheet.create({
   base: {
-    borderRadius: theme.borderRadius['2xl'], // 24px - AlmaSense style
+    borderRadius: theme.borderRadius['2xl'], // 24px - All Mind style
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',

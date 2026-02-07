@@ -8,11 +8,11 @@ import Icon from '../../components/Icon';
 import { useAuth } from '../../contexts/AuthContext';
 import { purchaseSubscription } from '../../services/inAppPurchase';
 
-interface UnlockAlmaSenseScreenProps {
+interface UnlockAll MindScreenProps {
   navigation: NativeStackNavigationProp<RootStackParamList>;
 }
 
-export default function UnlockAlmaSenseScreen({ navigation }: UnlockAlmaSenseScreenProps) {
+export default function UnlockAll MindScreen({ navigation }: UnlockAll MindScreenProps) {
   const { activateSubscription } = useAuth();
   const [selectedPlan, setSelectedPlan] = useState<'monthly' | 'yearly'>('yearly');
   const [isProcessing, setIsProcessing] = useState(false);
@@ -30,7 +30,7 @@ export default function UnlockAlmaSenseScreen({ navigation }: UnlockAlmaSenseScr
         
         Alert.alert(
           'Assinatura ativada! 🎉',
-          'Agora você tem acesso completo ao AlmaSense',
+          'Agora você tem acesso completo ao All Mind',
           [
             {
               text: 'Começar',
@@ -63,11 +63,11 @@ export default function UnlockAlmaSenseScreen({ navigation }: UnlockAlmaSenseScr
   };
 
   const openTerms = () => {
-    Linking.openURL('https://almasense.vercel.app/terms');
+    Linking.openURL('https://All Mind.vercel.app/terms');
   };
 
   const openPrivacy = () => {
-    Linking.openURL('https://almasense.vercel.app/privacy');
+    Linking.openURL('https://All Mind.vercel.app/privacy');
   };
 
   return (
@@ -84,7 +84,7 @@ export default function UnlockAlmaSenseScreen({ navigation }: UnlockAlmaSenseScr
 
       {/* Título */}
       <View style={styles.titleSection}>
-        <Text style={styles.title}>Desbloqueie{'\n'}AlmaSense</Text>
+        <Text style={styles.title}>Desbloqueie{'\n'}All Mind</Text>
       </View>
 
       {/* Benefícios */}

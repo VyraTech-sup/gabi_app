@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Bell, User } from "lucide-react";
 
 /**
- * Home AlmaSense - Story-First Experience
+ * Home All Mind - Story-First Experience
  * Layout focado em jornada emocional diária através de Stories
  */
 export default function Home() {
@@ -134,7 +134,7 @@ export default function Home() {
       {!isAuthenticated && (
         <div className="mx-8 mb-12 bg-[#D4B5A8] rounded-3xl p-8 shadow-lg">
           <h3 className="text-2xl font-semibold text-[#2D4A57] text-center mb-6">
-            Desbloqueie sua jornada completa em ALMASENSE
+            Desbloqueie sua jornada completa em All Mind
           </h3>
           <Button 
             className="w-full bg-[#3A5A6C] hover:bg-[#2D4A57] text-white py-6 text-lg"

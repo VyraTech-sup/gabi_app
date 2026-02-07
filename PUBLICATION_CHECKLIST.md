@@ -8,8 +8,8 @@
 
 | Item | Status | Bloqueia? | Detalhes |
 |------|--------|-----------|----------|
-| **Bundle Identifier iOS** | ✅ Completo | ❌ Sim | `com.vyratech.almasense` |
-| **Package Name Android** | ✅ Completo | ❌ Sim | `com.vyratech.almasense` |
+| **Bundle Identifier iOS** | ✅ Completo | ❌ Sim | `com.vyratech.All Mind` |
+| **Package Name Android** | ✅ Completo | ❌ Sim | `com.vyratech.All Mind` |
 | **Version** | ✅ Completo | ❌ Sim | `1.0.0` |
 | **Build Number iOS** | ✅ Completo | ❌ Sim | `1` |
 | **Version Code Android** | ✅ Completo | ❌ Sim | `1` |
@@ -32,7 +32,7 @@
 | **purchaseSubscription()** | ✅ Completo | ❌ Sim | Processa compra |
 | **restorePurchases()** | ✅ Completo | ❌ Sim | Restaura assinaturas (obrigatório Apple) |
 | **Purchase Listeners** | ✅ Completo | ❌ Sim | purchaseUpdatedListener + purchaseErrorListener |
-| **Paywall Screen** | ✅ Completo | ❌ Sim | `UnlockAlmaSenseScreen.tsx` |
+| **Paywall Screen** | ✅ Completo | ❌ Sim | `UnlockAll MindScreen.tsx` |
 | **Preços explícitos** | ✅ Completo | ❌ Sim | R$ 29,90/mês, R$ 299,90/ano |
 | **Texto compliance** | ✅ Completo | ❌ Sim | Renovação automática, cancelamento |
 | **Product IDs** | ⚠️ Pendente | ❌ Sim | Criar no App Store Connect + Google Play Console |
@@ -47,9 +47,9 @@
 |------|--------|-----------|----------|
 | **Privacy Policy** | ✅ Completo | ❌ Sim | `client/public/privacy.html` (LGPD + GDPR) |
 | **Terms of Service** | ✅ Completo | ❌ Sim | `client/public/terms.html` |
-| **Privacy URL** | ✅ Completo | ❌ Sim | https://almasense.vercel.app/privacy |
-| **Terms URL** | ✅ Completo | ❌ Sim | https://almasense.vercel.app/terms |
-| **Links no Paywall** | ✅ Completo | ❌ Sim | `UnlockAlmaSenseScreen` |
+| **Privacy URL** | ✅ Completo | ❌ Sim | https://All Mind.vercel.app/privacy |
+| **Terms URL** | ✅ Completo | ❌ Sim | https://All Mind.vercel.app/terms |
+| **Links no Paywall** | ✅ Completo | ❌ Sim | `UnlockAll MindScreen` |
 | **Auto-renewal disclosure** | ✅ Completo | ❌ Sim | Texto no paywall |
 | **Cancellation instructions** | ✅ Completo | ❌ Sim | iOS: Ajustes → Assinaturas, Android: Play Store |
 | **Refund policy** | ✅ Completo | ❌ Sim | Sem reembolso após consumo |
@@ -89,7 +89,7 @@
 | Item | Status | Bloqueia? | Detalhes |
 |------|--------|-----------|----------|
 | **Apple Developer Program** | ⚠️ Pendente | ❌ Sim | USD 99/ano - ação externa |
-| **App criado no App Store Connect** | ⚠️ Pendente | ❌ Sim | Bundle ID: `com.vyratech.almasense` |
+| **App criado no App Store Connect** | ⚠️ Pendente | ❌ Sim | Bundle ID: `com.vyratech.All Mind` |
 | **Screenshots iOS** | ⚠️ Pendente | ❌ Sim | 6.5", 6.9", 5.5", 12.9" (obrigatório 2 tamanhos) |
 | **App Icon 1024x1024** | ✅ Completo | ❌ Sim | Sem alpha channel |
 | **App Preview Video** | ⚠️ Pendente | ⚠️ Recomendado | Aumenta conversão |
@@ -111,7 +111,7 @@
 | Item | Status | Bloqueia? | Detalhes |
 |------|--------|-----------|----------|
 | **Google Play Developer Account** | ⚠️ Pendente | ❌ Sim | USD 25 (taxa única) - ação externa |
-| **App criado no Play Console** | ⚠️ Pendente | ❌ Sim | Package: `com.vyratech.almasense` |
+| **App criado no Play Console** | ⚠️ Pendente | ❌ Sim | Package: `com.vyratech.All Mind` |
 | **Screenshots Android** | ⚠️ Pendente | ❌ Sim | Phone, 7" tablet, 10" tablet (mín 2 por dispositivo) |
 | **Feature Graphic** | ⚠️ Pendente | ❌ Sim | 1024x500 |
 | **App Icon 512x512** | ⚠️ Pendente | ❌ Sim | PNG, 32-bit |
@@ -165,8 +165,8 @@
 | Item | Status | Bloqueia? | Detalhes |
 |------|--------|-----------|----------|
 | **Vercel Production** | ✅ Completo | ⚠️ Opcional | https://dist-smoky-eta-61.vercel.app |
-| **Privacy page deployed** | ✅ Completo | ❌ Sim | https://almasense.vercel.app/privacy |
-| **Terms page deployed** | ✅ Completo | ❌ Sim | https://almasense.vercel.app/terms |
+| **Privacy page deployed** | ✅ Completo | ❌ Sim | https://All Mind.vercel.app/privacy |
+| **Terms page deployed** | ✅ Completo | ❌ Sim | https://All Mind.vercel.app/terms |
 | **Home page All Mind** | ✅ Completo | ⚠️ Opcional | Story-first design |
 
 ---

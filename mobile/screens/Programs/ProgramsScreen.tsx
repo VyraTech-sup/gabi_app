@@ -20,15 +20,13 @@ export default function ProgramsScreen({ navigation }: ProgramsScreenProps) {
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.programsGrid}>
+        <View style={styles.listContainer}>
           {mockPrograms.map((program) => (
-            <View key={program.id} style={styles.programCardWrapper}>
-              <ProgramCard
-                program={program}
-                onPress={() => navigation.navigate('ProgramDetail', { programId: program.id })}
-                horizontal={true}
-              />
-            </View>
+            <ProgramCard
+              key={program.id}
+              program={program}
+              onPress={() => navigation.navigate('ProgramDetail', { programId: program.id })}
+            />
           ))}
         </View>
         <View style={{ height: theme.spacing.xl }} />
@@ -52,10 +50,7 @@ const styles = StyleSheet.create({
     fontWeight: theme.typography.fontWeight.semibold,
     color: theme.colors.text,
   },
-  programsGrid: {
-    paddingHorizontal: theme.spacing.xl,
-  },
-  programCardWrapper: {
-    marginBottom: theme.spacing.md,
+  listContainer: {
+    paddingHorizontal: theme.spacing.lg,
   },
 });

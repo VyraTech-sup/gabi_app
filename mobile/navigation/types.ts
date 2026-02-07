@@ -1,4 +1,8 @@
 export type RootStackParamList = {
+    SocialAuth: undefined;
+    AccessGranted: undefined;
+    Music: undefined;
+    Settings: undefined;
   // Intro
   Intro: undefined;
   
@@ -11,7 +15,7 @@ export type RootStackParamList = {
   // Mental Recording
   MentalRecordingChoice: undefined;
   Preparation: undefined;
-  AudioPlayer: undefined;
+  AudioPlayer: { audioId?: string; audioTitle?: string; audioFile?: string };
   
   // Story Flow
   StoryCompleted: undefined;
@@ -24,6 +28,7 @@ export type RootStackParamList = {
   Main: undefined;
   
   // Programs
+  Programs: undefined;
   ProgramDetail: { programId: string };
   
   // Player
@@ -32,7 +37,7 @@ export type RootStackParamList = {
   // Profile
   Notifications: undefined;
   Subscription: undefined;
-  UnlockAlmaSense: undefined;
+  UnlockAll Mind: undefined;
   
   // Settings
   Settings: undefined;

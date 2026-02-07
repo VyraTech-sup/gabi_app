@@ -15,7 +15,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.vyratech.almasense",
+      "bundleIdentifier": "com.vyratech.All Mind",
       "buildNumber": "1",
       "infoPlist": {
         "UIBackgroundModes": [
@@ -37,7 +37,7 @@
         "WAKE_LOCK",
         "WAKE_LOCK"
       ],
-      "package": "com.vyratech.almasense",
+      "package": "com.vyratech.allmind",
       "versionCode": 1,
       "minSdkVersion": 24,
       "targetSdkVersion": 34,

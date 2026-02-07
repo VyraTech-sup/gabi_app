@@ -12,7 +12,7 @@ export default function Input({ icon, style, ...props }: InputProps) {
       {icon && <View style={styles.iconContainer}>{icon}</View>}
       <TextInput
         style={[styles.input, icon ? styles.inputWithIcon : undefined, style]}
-        placeholderTextColor={theme.colors.textSecondary} // AlmaSense: #A0B5C0
+        placeholderTextColor={theme.colors.textSecondary} // All Mind: #A0B5C0
         {...props}
       />
     </View>

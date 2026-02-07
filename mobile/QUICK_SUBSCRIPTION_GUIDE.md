@@ -22,7 +22,7 @@ Ao fazer login pela primeira vez, o usuário NÃO terá assinatura ativa.
 
 **Passo a passo:**
 1. Na Home, clique em **"Assinar"** no card grande
-2. Você será levado para a tela de paywall (UnlockAlmaSense)
+2. Você será levado para a tela de paywall (UnlockAll Mind)
 3. Escolha um plano (Mensal ou Anual)
 4. Clique em **"Assinar"**
 5. ✅ Assinatura ativada automaticamente (mock)
@@ -81,10 +81,10 @@ Para testar novamente:
 - [ ] Banner de trial expirado (sem assinatura)
 - [ ] Card de assinatura (sem assinatura)
 - [ ] Banner premium (com assinatura)
-- [ ] Navegação para UnlockAlmaSense
+- [ ] Navegação para UnlockAll Mind
 
-### 2. UnlockAlmaSense (Paywall)
-- [ ] Título "Desbloqueie AlmaSense"
+### 2. UnlockAll Mind (Paywall)
+- [ ] Título "Desbloqueie All Mind"
 - [ ] Lista de benefícios com checks
 - [ ] Cards de preview dos Stories
 - [ ] Seleção de plano (mensal/anual)
@@ -112,7 +112,7 @@ Para testar novamente:
 ### Caso 1: Novo Usuário
 ```
 Login → Home (trial expirado) → Clique Story → Alert assinatura
-→ UnlockAlmaSense → Assinar → Home premium
+→ UnlockAll Mind → Assinar → Home premium
 ```
 
 ### Caso 2: Usuário Premium (1º Story)

@@ -248,7 +248,7 @@ export default function SettingsScreen({ navigation }: SettingsScreenProps) {
                 </Text>
                 <Button
                   title="Assinar"
-                  onPress={() => navigation.navigate('UnlockAlmaSense')}
+                  onPress={() => navigation.navigate('UnlockAll Mind')}
                   variant="primary"
                   size="medium"
                   style={styles.subscribeButton}
