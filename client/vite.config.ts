@@ -21,5 +21,20 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: true,
+    rollupOptions: {
+      external: [
+        // Exclude server-side modules from client bundle
+        /^node:.*/,
+        '@aws-sdk/client-s3',
+        '@aws-sdk/s3-request-presigner',
+      ],
+    },
+  },
+  optimizeDeps: {
+    exclude: [
+      // Prevent server code from being pre-bundled
+      '@aws-sdk/client-s3',
+      '@aws-sdk/s3-request-presigner',
+    ],
   },
 });
