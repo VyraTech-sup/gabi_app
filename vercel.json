@@ -1,6 +1,8 @@
 {
-  "framework": "vite",
-  "installCommand": "npm install --prefix client",
-  "buildCommand": "npm run build --prefix client",
-  "outputDirectory": "client/dist"
+  "buildCommand": "cd client && npm install && npm run build",
+  "outputDirectory": "client/dist",
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "\/(.*)", "dest": "\/index.html" }
+  ]
 }
