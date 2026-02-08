@@ -1,10 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ImageBackground } from 'react-native';
-import { theme } from '../../styles/theme';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ImageBackground, Linking } from 'react-native';
+import newTheme from './new_theme';
 import Icon from '../../components/Icon';
 import Button from '../../components/Button';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../navigation/types';
 import { useAuth } from '../../contexts/AuthContext';
 
 interface HomeScreenProps {
@@ -14,8 +12,8 @@ interface HomeScreenProps {
 // Mock de Stories
 const todayStory = {
   id: '1',
-  title: 'Relacionamento com seu Ciclo',
-  specialist: 'Pri Elias',
+  title: 'Auto Cura',
+  specialist: 'Gabriela Artz',
   thumbnail: 'https://picsum.photos/seed/story1/600/800',
   isLocked: false,
 };
@@ -23,15 +21,33 @@ const todayStory = {
 const watchedStories = [
   {
     id: '2',
-    title: 'Autocuidado e Feminino',
-    specialist: 'Ana Costa',
+    title: 'Insônia',
+    specialist: 'Gabriela Artz',
     thumbnail: 'https://picsum.photos/seed/story2/200/200',
   },
   {
     id: '3',
-    title: 'Conexão Interior',
-    specialist: 'Mariana Silva',
+    title: 'Autoconfiança',
+    specialist: 'Gabriela Artz',
     thumbnail: 'https://picsum.photos/seed/story3/200/200',
+  },
+  {
+    id: '4',
+    title: 'Felicidade',
+    specialist: 'Gabriela Artz',
+    thumbnail: 'https://picsum.photos/seed/story4/200/200',
+  },
+  {
+    id: '5',
+    title: 'Autocura',
+    specialist: 'Gabriela Artz',
+    thumbnail: 'https://picsum.photos/seed/story5/200/200',
+  },
+  {
+    id: '6',
+    title: 'Mentalidade e Mudanças',
+    specialist: 'Gabriela Artz',
+    thumbnail: 'https://picsum.photos/seed/story6/200/200',
   },
 ];
 
@@ -40,9 +56,9 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
 
   const handleWatchStory = () => {
     if (!hasActiveSubscription) {
-      navigation.navigate('UnlockAlmaSense');
+      // navigation.navigate('UnlockAll Mind');
     } else {
-      navigation.navigate('MentalRecordingChoice');
+      // navigation.navigate('AudioPlayer', { audioId: '5', audioTitle: 'Auto Cura', audioFile: '5' });
     }
   };
 
@@ -56,18 +72,12 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
         </View>
         
         <View style={styles.headerRight}>
-          <TouchableOpacity 
-            style={styles.notificationButton}
-            onPress={() => navigation.navigate('Notifications')}
-          >
-            <Icon name="bell" size={24} color={theme.colors.text} />
+          <TouchableOpacity style={styles.notificationButton}>
+            <Icon name="bell" size={24} color={newTheme.colors.text} />
           </TouchableOpacity>
           
-          <TouchableOpacity 
-            style={styles.profileButton}
-            onPress={() => navigation.navigate('Profile')}
-          >
-            <Icon name="user" size={24} color={theme.colors.text} />
+          <TouchableOpacity style={styles.profileButton}>
+            <Icon name="user" size={24} color={newTheme.colors.text} />
           </TouchableOpacity>
         </View>
       </View>
@@ -75,38 +85,24 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
       {/* Banner de Trial Expirado */}
       {!hasActiveSubscription && (
         <View style={styles.trialExpiredBanner}>
-          <Icon name="lock" size={20} color={theme.colors.text} />
+          <Icon name="lock" size={20} color={newTheme.colors.text} />
           <Text style={styles.trialExpiredText}>Sua avaliação gratuita expirou</Text>
         </View>
       )}
 
       {/* Card Principal - Story do Dia */}
-      <ImageBackground
-        source={{ uri: todayStory.thumbnail }}
-        style={styles.storyCard}
-        imageStyle={styles.storyCardImage}
-      >
+      <ImageBackground source={{ uri: todayStory.thumbnail }} style={styles.storyCard} imageStyle={styles.storyCardImage}>
         <View style={styles.storyOverlay}>
           {!hasActiveSubscription && (
-            <View style={styles.storyBadge}>
-              <Text style={styles.storyBadgeText}>Story 1</Text>
-            </View>
+            <View style={styles.storyBadge}><Text style={styles.storyBadgeText}>Story 1</Text></View>
           )}
           
           <View style={styles.storyContent}>
             <Text style={styles.storyTitle}>{todayStory.title}</Text>
             
-            <View style={styles.specialistPill}>
-              <Text style={styles.specialistText}>{todayStory.specialist}</Text>
-            </View>
+            <View style={styles.specialistPill}><Text style={styles.specialistText}>{todayStory.specialist}</Text></View>
             
-            <Button
-              title="Assistir Story"
-              onPress={handleWatchStory}
-              variant="primary"
-              size="large"
-              style={styles.watchButton}
-            />
+            <Button title="Assistir Story" onPress={handleWatchStory} variant="primary" size="large" style={styles.watchButton} />
           </View>
         </View>
       </ImageBackground>
@@ -115,23 +111,14 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
       {watchedStories.length > 0 && (
         <View style={styles.watchedSection}>
           <Text style={styles.watchedTitle}>Stories Assistidos</Text>
-          
           {watchedStories.map((story) => (
             <View key={story.id} style={styles.watchedStoryItem}>
-              <ImageBackground
-                source={{ uri: story.thumbnail }}
-                style={styles.watchedThumbnail}
-                imageStyle={styles.watchedThumbnailImage}
-              />
-              
+              <ImageBackground source={{ uri: story.thumbnail }} style={styles.watchedThumbnail} imageStyle={styles.watchedThumbnailImage} />
               <View style={styles.watchedStoryInfo}>
                 <Text style={styles.watchedStoryTitle}>{story.title}</Text>
                 <Text style={styles.watchedStorySpecialist}>{story.specialist}</Text>
               </View>
-              
-              <TouchableOpacity style={styles.rewatchButton}>
-                <Text style={styles.rewatchButtonText}>Assistir novamente</Text>
-              </TouchableOpacity>
+              <TouchableOpacity style={styles.rewatchButton}><Text style={styles.rewatchButtonText}>Assistir novamente</Text></TouchableOpacity>
             </View>
           ))}
         </View>
@@ -140,19 +127,19 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
       {/* Card de Conversão */}
       {!hasActiveSubscription && (
         <View style={styles.unlockCard}>
-          <Text style={styles.unlockTitle}>Desbloqueie sua jornada completa em ALMASENSE</Text>
-          <Button
-            title="Assinar →"
-            onPress={() => navigation.navigate('Subscription')}
-            variant="primary"
-            size="large"
-            fullWidth={true}
-            style={styles.unlockButton}
-          />
+          <Text style={styles.unlockTitle}>Desbloqueie sua jornada completa em All Mind</Text>
+          <Button title="Assinar →" variant="primary" size="large" fullWidth={true} style={styles.unlockButton} />
         </View>
       )}
 
-      <View style={{ height: theme.spacing['3xl'] }} />
+      {/* Link para Spotify */}
+      <TouchableOpacity style={styles.spotifyCard} onPress={() => Linking.openURL('https://open.spotify.com/show/seu-podcast')}>
+        <Icon name="music" size={24} color="#1DB954" />
+        <Text style={styles.spotifyText}>Ouça também no Spotify</Text>
+        <Icon name="external-link" size={20} color={newTheme.colors.textSecondary} />
+      </TouchableOpacity>
+
+      <View style={{ height: newTheme.spacing['16'] }} />
     </ScrollView>
   );
 }
@@ -343,5 +330,22 @@ const styles = StyleSheet.create({
   },
   unlockButton: {
     backgroundColor: theme.colors.primary,
+  },
+  spotifyCard: {
+    marginHorizontal: theme.spacing.xl,
+    marginBottom: theme.spacing.lg,
+    backgroundColor: theme.colors.surface,
+    borderRadius: theme.borderRadius.lg,
+    padding: theme.spacing.lg,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: theme.spacing.md,
+    ...theme.shadows.md,
+  },
+  spotifyText: {
+    flex: 1,
+    fontSize: theme.typography.fontSize.base,
+    fontWeight: theme.typography.fontWeight.medium,
+    color: theme.colors.text,
   },
 });

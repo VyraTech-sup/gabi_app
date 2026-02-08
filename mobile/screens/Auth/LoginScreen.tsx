@@ -16,7 +16,7 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
+  const { login, signInWithGoogle } = useAuth();
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -29,6 +29,17 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
       await login(email, password);
     } catch (error) {
       Alert.alert('Erro', 'Não foi possível fazer login');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    setLoading(true);
+    try {
+      await signInWithGoogle();
+    } catch (error) {
+      Alert.alert('Erro', 'Não foi possível autenticar com Google');
     } finally {
       setLoading(false);
     }
@@ -83,10 +94,11 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
           </View>
 
           <Button
-            title="Continuar com Google"
-            onPress={() => {}}
+            title="Entrar com Google"
+            onPress={handleGoogleLogin}
             variant="outline"
             fullWidth={true}
+            loading={loading}
           />
 
           <Button

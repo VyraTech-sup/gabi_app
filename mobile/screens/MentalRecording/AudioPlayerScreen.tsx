@@ -10,13 +10,26 @@ import Svg, { Circle, G, Path, Polygon } from 'react-native-svg';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'AudioPlayer'>;
 
-export default function AudioPlayerScreen() {
+interface AudioPlayerScreenProps {
+  route?: {
+    params?: {
+      audioId?: string;
+      audioTitle?: string;
+      audioFile?: string;
+    };
+  };
+}
+
+export default function AudioPlayerScreen({ route }: AudioPlayerScreenProps) {
   const navigation = useNavigation<NavigationProp>();
   const { markStoryWatched } = useAuth();
   const [sound, setSound] = useState<Audio.Sound | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [position, setPosition] = useState(0);
   const [duration, setDuration] = useState(0);
+  
+  const audioId = route?.params?.audioId;
+  const audioTitle = route?.params?.audioTitle || 'Autocura';
 
   useEffect(() => {
     loadAudio();
@@ -29,8 +42,19 @@ export default function AudioPlayerScreen() {
 
   const loadAudio = async () => {
     try {
+      // Mapear audioId para o arquivo correto
+      const audioFiles: { [key: string]: any } = {
+        '2': require('../../assets/audio_insonia.opus'),
+        '3': require('../../assets/AUTOHIPNOSE_AUTOCONFIANCA.mp3'),
+        '4': require('../../assets/AUTOHIPNOSE_FELICIDADEmix.mp3'),
+        '5': require('../../assets/fe_autocura.opus'),
+        '6': require('../../assets/mentalidade_mudancas.mp3.mp4'),
+      };
+      
+      const audioFile = audioId && audioFiles[audioId] ? audioFiles[audioId] : require('../../assets/fe_autocura.opus');
+      
       const { sound: newSound } = await Audio.Sound.createAsync(
-        require('../../assets/fe_autocura.opus'),
+        audioFile,
         { shouldPlay: false },
         onPlaybackStatusUpdate
       );

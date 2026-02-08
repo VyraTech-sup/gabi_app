@@ -1,11 +1,11 @@
 /**
- * Tema Global do All Mind App - Design AlmaSense
+ * Tema Global do All Mind App - Design All Mind
  * Cores, tipografia, espaçamentos e constantes visuais
  */
 
 export const theme = {
   colors: {
-    // Paleta principal (AlmaSense - Azul Petróleo)
+    // Paleta principal (All Mind - Azul Petróleo)
     primary: '#3A5A6C',      // Azul-Petróleo (Fundo Principal)
     primaryDark: '#2D4A57',  // Azul-Petróleo Escuro (Botões, Cards)
     primaryLight: '#4A6A7C',
@@ -48,7 +48,7 @@ export const theme = {
   },
   
   typography: {
-    // Família de fontes (AlmaSense - Segoe UI ou System)
+    // Família de fontes (All Mind - Segoe UI ou System)
     fontFamily: {
       regular: 'System',
       medium: 'System',
@@ -56,7 +56,7 @@ export const theme = {
       light: 'System',
     },
     
-    // Tamanhos (AlmaSense - maiores e mais impactantes)
+    // Tamanhos (All Mind - maiores e mais impactantes)
     fontSize: {
       xs: 12,          // Tags/Etiquetas
       sm: 14,          // Tags/Etiquetas
@@ -69,7 +69,7 @@ export const theme = {
       '5xl': 64,
     },
     
-    // Pesos (AlmaSense - mais light e elegante)
+    // Pesos (All Mind - mais light e elegante)
     fontWeight: {
       light: '300' as const,      // Textos delicados
       regular: '400' as const,    // Corpo de texto padrão

@@ -1,17 +1,20 @@
-import React, { useEffect } from 'react';
+﻿import React, { useEffect } from 'react';
 import { AuthProvider } from './contexts/AuthContext';
 import RootNavigator from './navigation/RootNavigator';
-import { initializePurchases, disconnectPurchases } from './services/inAppPurchase';
+import { createTestUser } from './services/storage';
+import Purchases from 'react-native-purchases';
 
 export default function App() {
   useEffect(() => {
-    // Inicializa In-App Purchase ao montar o app
-    initializePurchases();
+    // Initialize RevenueCat (replace with your PUBLIC API key via env)
+    try {
+      const key = process.env.REVENUECAT_API_KEY || 'REVENUECAT_API_KEY_HERE';
+      Purchases.setup(key);
+    } catch (err) {
+      console.warn('RevenueCat init failed', err);
+    }
 
-    // Cleanup ao desmontar
-    return () => {
-      disconnectPurchases();
-    };
+    createTestUser();
   }, []);
 
   return (

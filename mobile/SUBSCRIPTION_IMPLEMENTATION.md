@@ -1,4 +1,4 @@
-# 🎯 IMPLEMENTAÇÃO COMPLETA - SISTEMA DE ASSINATURA ALMASENSE
+# 🎯 IMPLEMENTAÇÃO COMPLETA - SISTEMA DE ASSINATURA All Mind
 
 **Data:** 16 de Janeiro de 2026
 **Status:** ✅ 100% IMPLEMENTADO
@@ -7,7 +7,7 @@
 
 ## 📋 RESUMO EXECUTIVO
 
-Sistema completo de assinatura integrado ao app AlmaSense, incluindo:
+Sistema completo de assinatura integrado ao app All Mind, incluindo:
 - ✅ Fluxo de paywall
 - ✅ Controle de acesso a Stories
 - ✅ Integração com pagamentos nativos (Apple/Google)
@@ -71,8 +71,8 @@ Funções principais:
 
 ## 📱 TELAS IMPLEMENTADAS/ATUALIZADAS
 
-### 1. **UnlockAlmaSenseScreen** (NOVA)
-**Localização:** `mobile/screens/Profile/UnlockAlmaSenseScreen.tsx`
+### 1. **UnlockAll MindScreen** (NOVA)
+**Localização:** `mobile/screens/Profile/UnlockAll MindScreen.tsx`
 
 **Funcionalidades:**
 - ✅ Design em fundo rosé conforme especificação
@@ -86,7 +86,7 @@ Funções principais:
 
 **Navegação:**
 ```typescript
-navigation.navigate('UnlockAlmaSense')
+navigation.navigate('UnlockAll Mind')
 ```
 
 ### 2. **HomeScreen** (ATUALIZADA)
@@ -96,7 +96,7 @@ navigation.navigate('UnlockAlmaSense')
 - ✅ Banner de "trial expirado" quando sem assinatura
 - ✅ Card grande de assinatura no feed (sem assinatura)
 - ✅ Banner de "Premium" (com assinatura)
-- ✅ Navegação para UnlockAlmaSense
+- ✅ Navegação para UnlockAll Mind
 
 ### 3. **SettingsScreen** (ATUALIZADA)
 **Localização:** `mobile/screens/Settings/SettingsScreen.tsx`
@@ -143,7 +143,7 @@ MentalRecordingChoice (bloqueado com cadeado)
   ↓
 Alert: "Assinatura necessária"
   ↓
-UnlockAlmaSenseScreen
+UnlockAll MindScreen
   ↓
 Seleciona plano → Assina
   ↓
@@ -312,7 +312,7 @@ eas build --platform android
 
 2. **Persistência:** Todos os dados são salvos no AsyncStorage e carregados no boot do app via AuthContext.
 
-3. **Navegação:** UnlockAlmaSense foi adicionado ao RootNavigator e pode ser chamado de qualquer tela.
+3. **Navegação:** UnlockAll Mind foi adicionado ao RootNavigator e pode ser chamado de qualquer tela.
 
 4. **Compatibilidade:** Todo código é TypeScript 100% tipado e usa componentes nativos do React Native.
 
@@ -329,6 +329,6 @@ eas build --platform android
 
 ---
 
-**Desenvolvido para:** AlmaSense / All Mind App
+**Desenvolvido para:** All Mind / All Mind App
 **Plataforma:** React Native + Expo
 **Versão:** 1.0.0

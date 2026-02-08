@@ -20,43 +20,24 @@ export default function ProgramCard({ program, onPress, horizontal = false }: Pr
     return `${hours}h ${remainingMinutes}m`;
   };
 
-  if (horizontal) {
-    return (
-      <TouchableOpacity style={styles.horizontalCard} onPress={onPress} activeOpacity={0.8}>
-        <Image source={{ uri: program.coverImage }} style={styles.horizontalImage} />
-        <View style={styles.horizontalContent}>
-          <Text style={styles.title} numberOfLines={2}>{program.title}</Text>
-          <Text style={styles.description} numberOfLines={2}>{program.description}</Text>
-          <View style={styles.meta}>
-            {program.isPremium && (
-              <View style={styles.premiumBadge}>
-                <Text style={styles.premiumText}>PREMIUM</Text>
-              </View>
-            )}
-            <Text style={styles.duration}>{formatDuration(program.duration)}</Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-    );
-  }
-
+  // Layout tipo Spotify: lista vertical, capa à esquerda, infos à direita
   return (
-    <TouchableOpacity style={styles.card} onPress={onPress} activeOpacity={0.8}>
-      <View style={styles.imageContainer}>
-        <Image source={{ uri: program.coverImage }} style={styles.image} />
-        {program.isPremium && (
-          <View style={styles.premiumOverlay}>
-            <Text style={styles.premiumOverlayText}>👑 Premium</Text>
-          </View>
-        )}
-      </View>
-      <View style={styles.content}>
-        <Text style={styles.title} numberOfLines={2}>{program.title}</Text>
-        <Text style={styles.instructor} numberOfLines={1}>{program.instructor || 'All Mind'}</Text>
-        <View style={styles.footer}>
-          <Text style={styles.duration}>{formatDuration(program.duration)}</Text>
+    <TouchableOpacity style={styles.spotifyCard} onPress={onPress} activeOpacity={0.8}>
+      <Image source={{ uri: program.coverImage }} style={styles.spotifyImage} />
+      <View style={styles.spotifyContent}>
+        <View style={styles.spotifyHeader}>
+          <Text style={styles.spotifyTitle} numberOfLines={1}>{program.title}</Text>
+          {program.isPremium && (
+            <View style={styles.spotifyPremiumBadge}>
+              <Text style={styles.spotifyPremiumText}>PREMIUM</Text>
+            </View>
+          )}
+        </View>
+        <Text style={styles.spotifyDescription} numberOfLines={1}>{program.description}</Text>
+        <View style={styles.spotifyMeta}>
+          <Text style={styles.spotifyDuration}>{formatDuration(program.duration)}</Text>
           {program.episodeCount && program.episodeCount > 1 && (
-            <Text style={styles.episodes}>{program.episodeCount} episódios</Text>
+            <Text style={styles.spotifyEpisodes}>{program.episodeCount} episódios</Text>
           )}
         </View>
       </View>
@@ -65,106 +46,70 @@ export default function ProgramCard({ program, onPress, horizontal = false }: Pr
 }
 
 const styles = StyleSheet.create({
-  card: {
-    width: 180,
-    marginRight: theme.spacing.md,
-    backgroundColor: theme.colors.surface, // #2D4A57
-    borderRadius: theme.borderRadius.lg, // 16
-    borderWidth: 2, // AlmaSense: borda branca
-    borderColor: theme.colors.border, // #FFFFFF
-    overflow: 'hidden',
-    ...theme.shadows.md,
+  spotifyCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: theme.colors.surface,
+    borderRadius: theme.borderRadius.md,
+    borderWidth: 1,
+    borderColor: theme.colors.border,
+    paddingVertical: theme.spacing.sm,
+    paddingHorizontal: theme.spacing.md,
+    marginBottom: theme.spacing.sm,
+    ...theme.shadows.sm,
   },
-  imageContainer: {
-    position: 'relative',
-  },
-  image: {
-    width: '100%',
-    height: 160,
+  spotifyImage: {
+    width: 56,
+    height: 56,
+    borderRadius: 8,
     backgroundColor: theme.colors.border,
+    marginRight: theme.spacing.md,
   },
-  premiumOverlay: {
-    position: 'absolute',
-    top: theme.spacing.sm,
-    right: theme.spacing.sm,
-    backgroundColor: theme.colors.accent1,
-    paddingHorizontal: theme.spacing.sm,
-    paddingVertical: 4,
-    borderRadius: theme.borderRadius.sm,
+  spotifyContent: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
-  premiumOverlayText: {
-    color: theme.colors.text,
-    fontSize: theme.typography.fontSize.xs,
-    fontWeight: theme.typography.fontWeight.semibold,
+  spotifyHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 2,
   },
-  content: {
-    padding: theme.spacing.md,
-  },
-  title: {
+  spotifyTitle: {
     fontSize: theme.typography.fontSize.base,
     fontWeight: theme.typography.fontWeight.semibold,
     color: theme.colors.text,
-    marginBottom: theme.spacing.xs,
-  },
-  instructor: {
-    fontSize: theme.typography.fontSize.sm,
-    color: theme.colors.textSecondary,
-    marginBottom: theme.spacing.sm,
-  },
-  footer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  duration: {
-    fontSize: theme.typography.fontSize.xs,
-    color: theme.colors.textLight,
-  },
-  episodes: {
-    fontSize: theme.typography.fontSize.xs,
-    color: theme.colors.textLight,
-  },
-  
-  // Horizontal variant
-  horizontalCard: {
-    flexDirection: 'row',
-    backgroundColor: theme.colors.surface, // #2D4A57
-    borderRadius: theme.borderRadius.lg, // 16
-    borderWidth: 2, // AlmaSense: borda branca
-    borderColor: theme.colors.border, // #FFFFFF
-    overflow: 'hidden',
-    marginBottom: theme.spacing.md,
-    ...theme.shadows.sm,
-  },
-  horizontalImage: {
-    width: 120,
-    height: 120,
-    backgroundColor: theme.colors.border,
-  },
-  horizontalContent: {
     flex: 1,
-    padding: theme.spacing.md,
-    justifyContent: 'space-between',
   },
-  description: {
+  spotifyPremiumBadge: {
+    backgroundColor: theme.colors.accent1,
+    paddingHorizontal: theme.spacing.xs,
+    paddingVertical: 2,
+    borderRadius: theme.borderRadius.sm,
+    marginLeft: theme.spacing.xs,
+  },
+  spotifyPremiumText: {
+    fontSize: theme.typography.fontSize.xs,
+    fontWeight: theme.typography.fontWeight.semibold,
+    color: theme.colors.text,
+  },
+  spotifyDescription: {
     fontSize: theme.typography.fontSize.sm,
     color: theme.colors.textSecondary,
-    marginTop: theme.spacing.xs,
+    marginBottom: 2,
   },
-  meta: {
+  spotifyMeta: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: theme.spacing.sm,
   },
-  premiumBadge: {
-    backgroundColor: theme.colors.accent1,
-    paddingHorizontal: theme.spacing.sm,
-    paddingVertical: 2,
-    borderRadius: theme.borderRadius.sm,
-  },
-  premiumText: {
+  spotifyDuration: {
     fontSize: theme.typography.fontSize.xs,
-    fontWeight: theme.typography.fontWeight.semibold,
-    color: theme.colors.text,
+    color: theme.colors.textLight,
+    marginRight: theme.spacing.sm,
+  },
+  spotifyEpisodes: {
+    fontSize: theme.typography.fontSize.xs,
+    color: theme.colors.textLight,
   },
 });

@@ -1,4 +1,4 @@
-# ✅ HOME ALMASENSE - IMPLEMENTAÇÃO COMPLETA
+# ✅ HOME All Mind - IMPLEMENTAÇÃO COMPLETA
 
 **Data:** 16 de Janeiro de 2026
 **Status:** ✅ CONCLUÍDO
@@ -39,7 +39,7 @@
 
 ## ✅ NOVO LAYOUT IMPLEMENTADO
 
-### 1. **Header AlmaSense**
+### 1. **Header All Mind**
 ```
 ┌────────────────────────────┐
 │  👤              🧘        │  
@@ -95,7 +95,7 @@
 - Badge "Story X" se sem assinatura
 
 **Comportamento:**
-- Se SEM assinatura → UnlockAlmaSense
+- Se SEM assinatura → UnlockAll Mind
 - Se COM assinatura → MentalRecordingChoice
 
 ### 4. **Stories Assistidos**
@@ -129,7 +129,7 @@
 ┌────────────────────────────┐
 │                            │
 │  Desbloqueie sua jornada   │
-│  completa em ALMASENSE     │
+│  completa em All Mind     │
 │                            │
 │  ┌──────────────────┐      │
 │  │   Assinar →      │      │
@@ -142,7 +142,7 @@
 - Background rosé (#D4B5A8)
 - Título centralizado
 - Botão full-width
-- Navega para UnlockAlmaSense
+- Navega para UnlockAll Mind
 
 ---
 
@@ -179,7 +179,7 @@ navigation.navigate('Profile')
 navigation.navigate('MentalRecordingChoice')
 
 // Paywall (sem assinatura)
-navigation.navigate('UnlockAlmaSense')
+navigation.navigate('UnlockAll Mind')
 ```
 
 ---
@@ -240,7 +240,7 @@ Stories assistidos
 ## ✅ RESULTADO FINAL
 
 - ❌ Visual genérico de meditação removido
-- ✅ Visual AlmaSense Story-first implementado
+- ✅ Visual All Mind Story-first implementado
 - ✅ Navegação focada em jornada emocional
 - ✅ UX feminina e premium
 - ✅ 0 erros de compilação

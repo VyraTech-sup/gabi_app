@@ -14,7 +14,7 @@
   - `purchaseSubscription()` - Processa compra
   - `restorePurchases()` - Restaura assinaturas (obrigatório Apple)
   - Purchase listeners configurados
-- ✅ Paywall (`UnlockAlmaSenseScreen.tsx`) com:
+- ✅ Paywall (`UnlockAll MindScreen.tsx`) com:
   - Preços explícitos: R$ 29,90/mês, R$ 299,90/ano
   - Texto compliance: renovação automática, cancelamento
   - Links para privacy e terms
@@ -30,12 +30,12 @@
   - Refund policy
   - Cancellation instructions (iOS + Android)
   - Recursos de emergência (CVV 188, SAMU 192)
-- ✅ Deployed em produção: https://almasense.vercel.app/privacy e /terms
+- ✅ Deployed em produção: https://All Mind.vercel.app/privacy e /terms
 
 ### 3. Configuração Técnica (100% Completo)
 - ✅ [app.json](c:\dev\gabi_app\mobile\app.json) compliance:
   - Nome: `All Mind`
-  - Bundle ID: `com.vyratech.almasense` (iOS + Android)
+  - Bundle ID: `com.vyratech.All Mind` (iOS + Android)
   - Build Number: `1` (iOS)
   - Version Code: `1` (Android)
   - Permissões mínimas: `UIBackgroundModes: audio` (iOS), `WAKE_LOCK` (Android)
@@ -78,8 +78,8 @@
 
 3. **Product IDs (In-App Purchase)** ❌ Bloqueia monetização
    - Após criar app no App Store Connect:
-     - `com.vyratech.almasense.monthly` - R$ 29,90/mês
-     - `com.vyratech.almasense.yearly` - R$ 299,90/ano
+     - `com.vyratech.All Mind.monthly` - R$ 29,90/mês
+     - `com.vyratech.All Mind.yearly` - R$ 299,90/ano
    - Após criar app no Play Console:
      - Subscription Group + Base Plans
      - Configurar preços por região
@@ -90,13 +90,13 @@
    - Capturar após build funcional
 
 5. **App Store Connect Setup** ❌ Bloqueia submissão iOS
-   - Criar app com Bundle ID `com.vyratech.almasense`
+   - Criar app com Bundle ID `com.vyratech.All Mind`
    - Preencher App Privacy Questionnaire
    - Configurar Category, Keywords, Description
    - Support URL necessário
 
 6. **Play Console Setup** ❌ Bloqueia submissão Android
-   - Criar app com Package `com.vyratech.almasense`
+   - Criar app com Package `com.vyratech.All Mind`
    - Preencher Data Safety Form
    - Configurar Content Rating (IARC)
    - Store Listing completo
@@ -126,8 +126,8 @@
 1. Contratar Apple Developer Program (USD 99)
 2. Contratar Google Play Developer (USD 25)
 3. Aguardar ativação (24-48h)
-4. Criar app no App Store Connect (Bundle: com.vyratech.almasense)
-5. Criar app no Play Console (Package: com.vyratech.almasense)
+4. Criar app no App Store Connect (Bundle: com.vyratech.All Mind)
+5. Criar app no Play Console (Package: com.vyratech.All Mind)
 ```
 
 ### Fase 2: In-App Purchase Setup (1 dia)
@@ -223,8 +223,8 @@ Android:
 ## 📞 SUPORTE PÓS-APROVAÇÃO
 
 ### URLs Críticas (Já configuradas)
-- Privacy Policy: https://almasense.vercel.app/privacy
-- Terms of Service: https://almasense.vercel.app/terms
+- Privacy Policy: https://All Mind.vercel.app/privacy
+- Terms of Service: https://All Mind.vercel.app/terms
 - Website: https://dist-smoky-eta-61.vercel.app
 
 ### Contatos (Para atualizar nos consoles)
@@ -241,7 +241,7 @@ Android:
 1. [mobile/app.json](c:\dev\gabi_app\mobile\app.json) - Configuração Expo
 2. [mobile/eas.json](c:\dev\gabi_app\mobile\eas.json) - Build profiles
 3. [mobile/services/inAppPurchase.ts](c:\dev\gabi_app\mobile\services\inAppPurchase.ts) - Serviço IAP
-4. [mobile/screens/Profile/UnlockAlmaSenseScreen.tsx](c:\dev\gabi_app\mobile\screens\Profile\UnlockAlmaSenseScreen.tsx) - Paywall
+4. [mobile/screens/Profile/UnlockAll MindScreen.tsx](c:\dev\gabi_app\mobile\screens\Profile\UnlockAll MindScreen.tsx) - Paywall
 5. [mobile/contexts/AuthContext.tsx](c:\dev\gabi_app\mobile\contexts\AuthContext.tsx) - Subscription state
 6. [client/public/privacy.html](c:\dev\gabi_app\client\public\privacy.html) - Privacy Policy
 7. [client/public/terms.html](c:\dev\gabi_app\client\public\terms.html) - Terms of Service

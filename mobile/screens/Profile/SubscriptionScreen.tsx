@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { theme } from '../../styles/theme';
 import Button from '../../components/Button';
+import Purchases from 'react-native-purchases';
+import { setSubscriptionData, setPremiumStatus, setTrialUsed } from '../../services/storage';
 
 interface PlanFeature {
   text: string;
@@ -19,10 +21,10 @@ interface Plan {
 
 const plans: Plan[] = [
   {
-    id: 'monthly',
-    name: 'Mensal',
-    price: 'R$ 29,90',
-    period: '/mês',
+    id: 'trimestral',
+    name: 'Trimestral',
+    price: 'R$ 49,00',
+    period: '/trimestre',
     features: [
       { text: 'Acesso ilimitado a todo conteúdo', included: true },
       { text: 'Downloads offline', included: true },
@@ -32,10 +34,10 @@ const plans: Plan[] = [
     ],
   },
   {
-    id: 'yearly',
-    name: 'Anual',
-    price: 'R$ 199,90',
-    period: '/ano',
+    id: 'semestral',
+    name: 'Semestral',
+    price: 'R$ 39,00',
+    period: '/semestre',
     popular: true,
     features: [
       { text: 'Acesso ilimitado a todo conteúdo', included: true },
@@ -43,7 +45,19 @@ const plans: Plan[] = [
       { text: 'Sem anúncios', included: true },
       { text: 'Conteúdo exclusivo Premium', included: true },
       { text: 'Novos programas toda semana', included: true },
-      { text: 'Economia de 44% ao ano', included: true },
+    ],
+  },
+  {
+    id: 'anual',
+    name: 'Anual',
+    price: 'R$ 29,00',
+    period: '/ano',
+    features: [
+      { text: 'Acesso ilimitado a todo conteúdo', included: true },
+      { text: 'Downloads offline', included: true },
+      { text: 'Sem anúncios', included: true },
+      { text: 'Conteúdo exclusivo Premium', included: true },
+      { text: 'Novos programas toda semana', included: true },
     ],
   },
 ];
@@ -56,7 +70,78 @@ interface SubscriptionScreenProps {
 }
 
 export default function SubscriptionScreen({ navigation }: SubscriptionScreenProps) {
-  const [selectedPlan, setSelectedPlan] = useState('yearly');
+  const [selectedPlan, setSelectedPlan] = useState('semestral');
+  const [availablePackages, setAvailablePackages] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    let mounted = true;
+    const load = async () => {
+      try {
+        const offerings = await Purchases.getOfferings();
+        const packages = offerings?.current?.availablePackages ?? [];
+        if (mounted) setAvailablePackages(packages);
+      } catch (err) {
+        console.warn('Erro ao carregar ofertas:', err);
+      }
+    };
+    load();
+    return () => { mounted = false; };
+  }, []);
+
+  const confirmAndBuy = () => {
+    Alert.alert(
+      '7 dias grátis',
+      'Você terá 7 dias grátis. Após o período, a cobrança será iniciada automaticamente. Deseja continuar?',
+      [
+        { text: 'Cancelar', style: 'cancel' },
+        { text: 'Continuar', onPress: () => handleBuy() },
+      ]
+    );
+  };
+
+  const handleBuy = async () => {
+    if (availablePackages.length === 0) {
+      Alert.alert('Erro', 'Nenhuma oferta disponível no momento. Tente novamente mais tarde.');
+      return;
+    }
+
+    // Por simplicidade, usamos a primeira package disponível.
+    const pkg = availablePackages[0];
+    setIsLoading(true);
+    try {
+      const purchase = await Purchases.purchasePackage(pkg);
+      const customerInfo = await Purchases.getCustomerInfo();
+      // Tente encontrar entitlement ativo (nome comum: 'premium')
+      const entitlements = customerInfo?.entitlements?.active ?? {};
+      const keys = Object.keys(entitlements);
+      if (keys.length > 0) {
+        const ent = entitlements[keys[0]];
+        // Atualiza storage local com dados de assinatura retornados pela RevenueCat
+        await setSubscriptionData({
+          plan: pkg.product?.productId?.includes('year') ? 'yearly' : 'monthly',
+          status: 'active',
+          startDate: ent?.latestPurchaseDate ?? new Date().toISOString(),
+          endDate: ent?.expirationDate ?? undefined,
+        });
+        await setPremiumStatus(true);
+        await setTrialUsed(true);
+        Alert.alert('Sucesso', 'Assinatura ativada. Aproveite seu acesso!');
+        navigation.goBack();
+      } else {
+        Alert.alert('Compra incompleta', 'Compra finalizada, mas não encontramos uma assinatura ativa.');
+      }
+    } catch (e: any) {
+      if (e.userCancelled) {
+        // usuário cancelou
+      } else {
+        console.warn('Erro na compra:', e);
+        Alert.alert('Erro', 'Erro ao processar compra. Tente novamente.');
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -153,8 +238,8 @@ export default function SubscriptionScreen({ navigation }: SubscriptionScreenPro
       {/* Footer */}
       <View style={styles.footer}>
         <Button
-          title="Assinar agora"
-          onPress={() => {}}
+          title={isLoading ? 'Processando...' : 'Assinar agora'}
+          onPress={handleBuy}
           fullWidth={true}
         />
         <Text style={styles.footerText}>

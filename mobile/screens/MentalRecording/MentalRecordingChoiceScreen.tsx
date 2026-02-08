@@ -45,7 +45,7 @@ export default function MentalRecordingChoiceScreen() {
           { text: 'Cancelar', style: 'cancel' },
           { 
             text: 'Assinar', 
-            onPress: () => navigation.navigate('UnlockAlmaSense')
+            onPress: () => navigation.navigate('UnlockAll Mind')
           },
         ]
       );

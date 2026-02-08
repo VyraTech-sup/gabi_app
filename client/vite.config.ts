@@ -12,6 +12,12 @@ export default defineConfig({
       '@assets': path.resolve(__dirname, '..', 'attached_assets'),
     },
   },
+  server: {
+    fs: {
+      // allow serving files from the repo root (shared folder)
+      allow: [path.resolve(__dirname, '..')],
+    },
+  },
   build: {
     outDir: 'dist',
     emptyOutDir: true,
