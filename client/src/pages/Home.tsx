@@ -1,6 +1,8 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Bell, User } from "lucide-react";
+import { getLoginUrl } from "@/const";
+import { useState } from "react";
 
 /**
  * Home All Mind - Story-First Experience
@@ -8,9 +10,69 @@ import { Bell, User } from "lucide-react";
  */
 export default function Home() {
   const { user, isAuthenticated, logout } = useAuth();
+  const [phone, setPhone] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const needsPhone = Boolean(isAuthenticated && (!user?.phone || !user?.isActive));
+
+  const handleStartOAuth = () => {
+    window.location.href = getLoginUrl();
+  };
+
+  const handleSubmitPhone = async () => {
+    if (!phone) return;
+    setLoading(true);
+    try {
+      const payload = { name: user?.name ?? null, email: user?.email ?? null, phone, provider: 'google' };
+      const res = await fetch('/api/web-register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        credentials: 'include',
+      });
+      if (!res.ok) throw new Error('Failed to register');
+      // reload to pick up session and updated user
+      window.location.href = '/audios';
+    } catch (err) {
+      console.error(err);
+      alert('Falha ao salvar telefone. Tente novamente.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#3A5A6C]">
+      {/* If user not authenticated show login gate */}
+      {!isAuthenticated && (
+        <div className="min-h-screen flex items-center justify-center" style={{ backgroundImage: 'url(/assets/onboarding/allmind-tela1.png)', backgroundSize: 'cover' }}>
+          <div className="w-full max-w-xl px-8">
+            <button onClick={handleStartOAuth} className="w-full bg-white rounded-full py-4 flex items-center justify-center gap-3 shadow-md">
+              <img src="https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png" alt="Google" className="w-6 h-6" />
+              <span className="text-[#3A5A6C] font-bold text-lg">Entrar com Google</span>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* If authenticated but missing phone, show mini-signup */}
+      {needsPhone && (
+        <div className="min-h-screen flex items-center justify-center bg-[#3A5A6C]">
+          <div className="w-full max-w-md bg-white rounded-2xl p-8">
+            <h2 className="text-2xl font-bold text-[#2D4A57] mb-2">Complete seu cadastro</h2>
+            <p className="text-sm text-[#6B7E86] mb-6">Preencha seu telefone para acessar o aplicativo</p>
+            <label className="block text-sm text-gray-700">Nome</label>
+            <input className="w-full p-3 rounded-md mb-3 border" defaultValue={user?.name ?? ''} />
+            <label className="block text-sm text-gray-700">E-mail</label>
+            <input className="w-full p-3 rounded-md mb-3 border bg-gray-100" value={user?.email ?? ''} readOnly />
+            <label className="block text-sm text-gray-700">Telefone</label>
+            <input className="w-full p-3 rounded-md mb-4 border" value={phone} onChange={e => setPhone(e.target.value)} placeholder="(00) 00000-0000" />
+            <button className="w-full bg-[#3A5A6C] text-white py-3 rounded-md" onClick={handleSubmitPhone} disabled={loading || !phone}>
+              {loading ? 'Salvando...' : 'Acessar aplicativo'}
+            </button>
+          </div>
+        </div>
+      )}
       {/* Header */}
       <header className="px-8 pt-12 pb-6">
         <div className="flex justify-between items-start">

@@ -1,5 +1,6 @@
 import { trpc } from "@/lib/trpc";
-import { UNAUTHED_ERR_MSG } from '@shared/const';
+// Inline the auth error message to avoid build import resolution issues
+const UNAUTHED_ERR_MSG = 'Please login (10001)';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink, TRPCClientError } from "@trpc/client";
 import { createRoot } from "react-dom/client";

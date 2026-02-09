@@ -1,11 +1,16 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { playAudio, stopAudio, isAudioPlaying } from "@/lib/globalAudio";
 
 // Exemplo de dados dos áudios
 const audios = [
-  { nome: "Reprogramação do Sono", arquivo: "audio_insonia.opus" },
-  { nome: "Autoestima e Autocura", arquivo: "fe_autocura.opus" },
-  // Adicione mais áudios conforme necessário
+  { nome: "Elimine a Insônia", arquivo: "audio_insonia.opus" },
+  { nome: "Vença a Ansiedade", arquivo: "vencer_a_ansiedade.opus" },
+  { nome: "Vença o Medo de Errar", arquivo: "vencer_o_medo_de_errar.opus" },
+  { nome: "Se Abra Para Mudanças", arquivo: "mentalidade_mudancas.mp3" },
+  { nome: "Ative a Felicidade", arquivo: "AUTOHIPNOSE_FELICIDADEmix.mp3" },
+  { nome: "Fortaleça a Autoconfiança", arquivo: "AUTOHIPNOSE_AUTOCONFIANCA.mp3" },
+  { nome: "Ative Fé e Autocura", arquivo: "fe_autocura.opus" },
 ];
 
 export default function ListaAudios() {
@@ -22,8 +27,18 @@ export default function ListaAudios() {
           >
             <span className="text-[#3A5A6C] font-medium">{audio.nome}</span>
             <Button
-              onClick={() => setAudioSelecionado(audio.arquivo)}
+              onClick={async () => {
+                // block re-creating audio; use global singleton
+                const url = `/assets/${audio.arquivo}`;
+                try {
+                  await playAudio(url);
+                  setAudioSelecionado(audio.arquivo);
+                } catch (e) {
+                  // ignore playback error
+                }
+              }}
               variant={audioSelecionado === audio.arquivo ? "default" : "outline"}
+              disabled={isAudioPlaying() && audioSelecionado !== audio.arquivo}
             >
               {audioSelecionado === audio.arquivo ? "Selecionado" : "Ouvir"}
             </Button>
