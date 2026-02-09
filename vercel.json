@@ -1,6 +1,6 @@
 {
-  "buildCommand": "cd client && npm install && npm run build",
-  "outputDirectory": "client/dist",
+  "buildCommand": "cd mobile && npm install && npx expo export --platform web --output-dir dist",
+  "outputDirectory": "mobile/dist",
   "routes": [
     { "handle": "filesystem" },
     { "src": "\/(.*)", "dest": "\/index.html" }
