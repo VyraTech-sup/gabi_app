@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'wouter';
 
 export default function Onboarding() {
   const [step, setStep] = useState(1);
-  const navigate = useNavigate();
+  const [, setLocation] = useLocation();
 
   const slides = [
     {
@@ -34,12 +34,12 @@ export default function Onboarding() {
     if (step < 4) {
       setStep(step + 1);
     } else {
-      navigate('/programs');
+      setLocation('/programs');
     }
   };
 
   const handleSkip = () => {
-    navigate('/programs');
+    setLocation('/programs');
   };
 
   return (

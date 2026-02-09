@@ -1,9 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useRoute, useLocation } from 'wouter';
 
 export default function Player() {
-  const { id } = useParams();
-  const navigate = useNavigate();
+  const [match, params] = useRoute('/player/:id');
+  const [, setLocation] = useLocation();
+  const id = params?.id;
   const audioRef = useRef<HTMLAudioElement>(null);
   
   const [isPlaying, setIsPlaying] = useState(false);
@@ -27,7 +28,7 @@ export default function Player() {
     const updateDuration = () => setDuration(audio.duration);
     const handleEnded = () => {
       setIsPlaying(false);
-      navigate('/programs');
+      setLocation('/programs');
     };
 
     audio.addEventListener('timeupdate', updateTime);

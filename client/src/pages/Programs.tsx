@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'wouter';
 
 interface Program {
   id: string;
@@ -63,7 +63,7 @@ const programs: Program[] = [
 
 export default function Programs() {
   const [selectedCategory, setSelectedCategory] = useState('Todos');
-  const navigate = useNavigate();
+  const [, setLocation] = useLocation();
 
   const categories = ['Todos', 'Bem-estar', 'Meditação', 'Relacionamentos', 'Prosperidade', 'Sono', 'Desenvolvimento'];
 
@@ -72,7 +72,7 @@ export default function Programs() {
     : programs.filter(p => p.category === selectedCategory);
 
   const handleProgramClick = (programId: string) => {
-    navigate(`/player/${programId}`);
+    setLocation(`/player/${programId}`);
   };
 
   return (
