@@ -1,5 +1,5 @@
 {
-  "buildCommand": "cd mobile && npm install && npx expo export --platform web --output-dir dist",
+  "buildCommand": "cd mobile && npm install && npm run build:web",
   "outputDirectory": "mobile/dist",
   "routes": [
     { "handle": "filesystem" },
