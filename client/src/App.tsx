@@ -2,25 +2,19 @@ import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
 import React, { Suspense } from "react";
-const ListaAudios = React.lazy(() => import("@/pages/ListaAudios"));
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import Home from "./pages/Home";
+import Onboarding from "./pages/Onboarding";
+import Programs from "./pages/Programs";
+import Player from "./pages/Player";
 
 function Router() {
-  // make sure to consider if you need authentication for certain routes
   return (
     <Switch>
-      <Route path={"/"} component={Home} />
-      <Route
-        path={"/audios"}
-        component={() => (
-          <Suspense fallback={<div>Carregando...</div>}>
-            <ListaAudios />
-          </Suspense>
-        )}
-      />
+      <Route path={"/"} component={Onboarding} />
+      <Route path={"/programs"} component={Programs} />
+      <Route path={"/player/:id"} component={Player} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
@@ -28,17 +22,11 @@ function Router() {
   );
 }
 
-// NOTE: About Theme
-// - First choose a default theme according to your design style (dark or light bg), than change color palette in index.css
-//   to keep consistent foreground/background color across components
-// - If you want to make theme switchable, pass `switchable` ThemeProvider and use `useTheme` hook
-
 function App() {
   return (
     <ErrorBoundary>
       <ThemeProvider
         defaultTheme="light"
-        // switchable
       >
         <TooltipProvider>
           <Toaster />
