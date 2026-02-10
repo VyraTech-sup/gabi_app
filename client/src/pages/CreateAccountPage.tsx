@@ -10,6 +10,7 @@ export default function CreateAccountPage() {
   // Estados do formulário
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -27,6 +28,11 @@ export default function CreateAccountPage() {
 
     if (!email.trim()) {
       setError('Por favor, preencha seu email')
+      return
+    }
+
+    if (!phone.trim()) {
+      setError('Por favor, preencha seu telefone/WhatsApp')
       return
     }
 
@@ -53,6 +59,7 @@ export default function CreateAccountPage() {
         body: JSON.stringify({
           name: name.trim(),
           email: email.trim().toLowerCase(),
+          phone: phone.trim(),
           created_at: new Date().toISOString(),
           source: 'all_mind_web',
         }),
@@ -98,6 +105,16 @@ export default function CreateAccountPage() {
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            disabled={loading}
+            style={styles.input}
+          />
+
+          {/* Input Telefone/WhatsApp */}
+          <input
+            type="tel"
+            placeholder="Telefone/WhatsApp"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
             disabled={loading}
             style={styles.input}
           />

@@ -18,6 +18,7 @@ export default function CreateAccountScreen() {
   // Estados do formulário
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -31,6 +32,11 @@ export default function CreateAccountScreen() {
 
     if (!email.trim()) {
       Alert.alert('Erro', 'Por favor, preencha seu email');
+      return;
+    }
+
+    if (!phone.trim()) {
+      Alert.alert('Erro', 'Por favor, preencha seu telefone/WhatsApp');
       return;
     }
 
@@ -57,6 +63,7 @@ export default function CreateAccountScreen() {
         body: JSON.stringify({
           name: name.trim(),
           email: email.trim().toLowerCase(),
+          phone: phone.trim(),
           created_at: new Date().toISOString(),
           source: 'all_mind_app',
         }),
@@ -109,6 +116,16 @@ export default function CreateAccountScreen() {
             keyboardType="email-address"
             autoCapitalize="none"
             autoComplete="email"
+            editable={!loading}
+          />
+
+          {/* Input Telefone/WhatsApp */}
+          <Input
+            placeholder="Telefone/WhatsApp"
+            value={phone}
+            onChangeText={setPhone}
+            keyboardType="phone-pad"
+            autoCapitalize="none"
             editable={!loading}
           />
 
