@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
 import { theme } from '../../styles/theme';
 import Button from '../../components/Button';
-import { mockPrograms, getEpisodesByProgramId } from '../../data/mockData';
+import { mockPrograms, getEpisodesByProgramId, getReviewsByProgramId, getProgramRating } from '../../data/mockData';
 
 interface ProgramDetailScreenProps {
   route: {
@@ -20,6 +20,8 @@ export default function ProgramDetailScreen({ route, navigation }: ProgramDetail
   const { programId } = route.params;
   const program = mockPrograms.find(p => p.id === programId);
   const episodes = getEpisodesByProgramId(programId);
+  const reviews = getReviewsByProgramId(programId);
+  const rating = getProgramRating(programId);
   const [isFavorite, setIsFavorite] = useState(false);
 
   if (!program) {
@@ -36,6 +38,31 @@ export default function ProgramDetailScreen({ route, navigation }: ProgramDetail
     const hours = Math.floor(minutes / 60);
     const remainingMinutes = minutes % 60;
     return `${hours}h ${remainingMinutes}m`;
+  };
+
+  const renderStars = (rating: number) => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      stars.push(
+        <Text key={i} style={styles.star}>
+          {i <= Math.floor(rating) ? '⭐' : i <= rating ? '⭐' : '☆'}
+        </Text>
+      );
+    }
+    return <View style={styles.starsContainer}>{stars}</View>;
+  };
+
+  const formatDate = (dateString: string): string => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffTime = Math.abs(now.getTime() - date.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    if (diffDays === 0) return 'Hoje';
+    if (diffDays === 1) return 'Ontem';
+    if (diffDays < 7) return `${diffDays} dias atrás`;
+    if (diffDays < 30) return `${Math.floor(diffDays / 7)} semanas atrás`;
+    return date.toLocaleDateString('pt-BR');
   };
 
   return (
@@ -158,6 +185,87 @@ export default function ProgramDetailScreen({ route, navigation }: ProgramDetail
                   )}
                 </TouchableOpacity>
               ))}
+            </View>
+          )}
+
+          {/* Ratings & Reviews */}
+          {rating && (
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>Avaliações</Text>
+              
+              {/* Rating Summary */}
+              <View style={styles.ratingSummary}>
+                <View style={styles.ratingOverview}>
+                  <Text style={styles.ratingNumber}>{rating.averageRating.toFixed(1)}</Text>
+                  {renderStars(rating.averageRating)}
+                  <Text style={styles.ratingCount}>{rating.totalReviews} avaliações</Text>
+                </View>
+                
+                {/* Rating Distribution */}
+                <View style={styles.ratingDistribution}>
+                  {[5, 4, 3, 2, 1].map((star) => {
+                    const count = rating.ratingDistribution[star as keyof typeof rating.ratingDistribution];
+                    const percentage = (count / rating.totalReviews) * 100;
+                    return (
+                      <View key={star} style={styles.distributionRow}>
+                        <Text style={styles.distributionStar}>{star}⭐</Text>
+                        <View style={styles.distributionBar}>
+                          <View style={[styles.distributionFill, { width: `${percentage}%` }]} />
+                        </View>
+                        <Text style={styles.distributionCount}>{count}</Text>
+                      </View>
+                    );
+                  })}
+                </View>
+              </View>
+            </View>
+          )}
+
+          {/* Reviews/Comments */}
+          {reviews.length > 0 && (
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>Comentários ({reviews.length})</Text>
+              
+              {reviews.map((review) => (
+                <View key={review.id} style={styles.reviewCard}>
+                  {/* Review Header */}
+                  <View style={styles.reviewHeader}>
+                    <Image 
+                      source={{ uri: review.userAvatar || 'https://i.pravatar.cc/150' }} 
+                      style={styles.reviewAvatar} 
+                    />
+                    <View style={styles.reviewHeaderInfo}>
+                      <Text style={styles.reviewUserName}>{review.userName}</Text>
+                      <View style={styles.reviewMeta}>
+                        {renderStars(review.rating)}
+                        <Text style={styles.reviewDate}>{formatDate(review.createdAt)}</Text>
+                      </View>
+                    </View>
+                  </View>
+                  
+                  {/* Review Content */}
+                  <Text style={styles.reviewComment}>{review.comment}</Text>
+                  {review.experience && (
+                    <View style={styles.reviewExperienceBox}>
+                      <Text style={styles.reviewExperienceLabel}>💭 Experiência:</Text>
+                      <Text style={styles.reviewExperience}>{review.experience}</Text>
+                    </View>
+                  )}
+                  
+                  {/* Review Footer */}
+                  <View style={styles.reviewFooter}>
+                    <TouchableOpacity style={styles.reviewLikeButton}>
+                      <Text style={styles.reviewLikeIcon}>👍</Text>
+                      <Text style={styles.reviewLikeText}>{review.likes}</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              ))}
+              
+              {/* Add Review Button */}
+              <TouchableOpacity style={styles.addReviewButton}>
+                <Text style={styles.addReviewText}>✍️ Compartilhar minha experiência</Text>
+              </TouchableOpacity>
             </View>
           )}
 
@@ -355,5 +463,165 @@ const styles = StyleSheet.create({
   },
   episodePremium: {
     fontSize: 20,
+  },
+  // Rating Styles
+  starsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  star: {
+    fontSize: 16,
+    marginRight: 2,
+  },
+  ratingSummary: {
+    flexDirection: 'row',
+    backgroundColor: theme.colors.surface,
+    padding: theme.spacing.lg,
+    borderRadius: theme.borderRadius.lg,
+    gap: theme.spacing.xl,
+  },
+  ratingOverview: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingRight: theme.spacing.lg,
+    borderRightWidth: 1,
+    borderRightColor: theme.colors.border,
+  },
+  ratingNumber: {
+    fontSize: 48,
+    fontWeight: theme.typography.fontWeight.bold,
+    color: theme.colors.primary,
+    marginBottom: theme.spacing.xs,
+  },
+  ratingCount: {
+    fontSize: theme.typography.fontSize.sm,
+    color: theme.colors.textSecondary,
+    marginTop: theme.spacing.xs,
+  },
+  ratingDistribution: {
+    flex: 1,
+    gap: theme.spacing.sm,
+  },
+  distributionRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: theme.spacing.sm,
+  },
+  distributionStar: {
+    fontSize: theme.typography.fontSize.sm,
+    width: 40,
+  },
+  distributionBar: {
+    flex: 1,
+    height: 8,
+    backgroundColor: theme.colors.border,
+    borderRadius: theme.borderRadius.full,
+    overflow: 'hidden',
+  },
+  distributionFill: {
+    height: '100%',
+    backgroundColor: theme.colors.accent1,
+  },
+  distributionCount: {
+    fontSize: theme.typography.fontSize.sm,
+    color: theme.colors.textSecondary,
+    width: 30,
+    textAlign: 'right',
+  },
+  // Review Styles
+  reviewCard: {
+    backgroundColor: theme.colors.surface,
+    padding: theme.spacing.lg,
+    borderRadius: theme.borderRadius.lg,
+    marginBottom: theme.spacing.md,
+    borderWidth: 1,
+    borderColor: theme.colors.border,
+  },
+  reviewHeader: {
+    flexDirection: 'row',
+    marginBottom: theme.spacing.md,
+  },
+  reviewAvatar: {
+    width: 48,
+    height: 48,
+    borderRadius: theme.borderRadius.full,
+    marginRight: theme.spacing.md,
+    backgroundColor: theme.colors.border,
+  },
+  reviewHeaderInfo: {
+    flex: 1,
+  },
+  reviewUserName: {
+    fontSize: theme.typography.fontSize.base,
+    fontWeight: theme.typography.fontWeight.semibold,
+    color: theme.colors.text,
+    marginBottom: theme.spacing.xs,
+  },
+  reviewMeta: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: theme.spacing.sm,
+  },
+  reviewDate: {
+    fontSize: theme.typography.fontSize.sm,
+    color: theme.colors.textSecondary,
+  },
+  reviewComment: {
+    fontSize: theme.typography.fontSize.base,
+    color: theme.colors.text,
+    lineHeight: theme.typography.lineHeight.relaxed * theme.typography.fontSize.base,
+    marginBottom: theme.spacing.sm,
+  },
+  reviewExperienceBox: {
+    backgroundColor: theme.colors.background,
+    padding: theme.spacing.md,
+    borderRadius: theme.borderRadius.md,
+    borderLeftWidth: 3,
+    borderLeftColor: theme.colors.primary,
+    marginBottom: theme.spacing.sm,
+  },
+  reviewExperienceLabel: {
+    fontSize: theme.typography.fontSize.sm,
+    fontWeight: theme.typography.fontWeight.semibold,
+    color: theme.colors.primary,
+    marginBottom: theme.spacing.xs,
+  },
+  reviewExperience: {
+    fontSize: theme.typography.fontSize.sm,
+    color: theme.colors.textSecondary,
+    lineHeight: theme.typography.lineHeight.relaxed * theme.typography.fontSize.sm,
+    fontStyle: 'italic',
+  },
+  reviewFooter: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: theme.spacing.sm,
+  },
+  reviewLikeButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: theme.spacing.xs,
+  },
+  reviewLikeIcon: {
+    fontSize: 18,
+  },
+  reviewLikeText: {
+    fontSize: theme.typography.fontSize.sm,
+    color: theme.colors.textSecondary,
+  },
+  addReviewButton: {
+    backgroundColor: theme.colors.surface,
+    padding: theme.spacing.lg,
+    borderRadius: theme.borderRadius.lg,
+    alignItems: 'center',
+    borderWidth: 2,
+    borderStyle: 'dashed',
+    borderColor: theme.colors.border,
+    marginTop: theme.spacing.md,
+  },
+  addReviewText: {
+    fontSize: theme.typography.fontSize.base,
+    fontWeight: theme.typography.fontWeight.medium,
+    color: theme.colors.primary,
   },
 });

@@ -3,7 +3,7 @@
  * Substituir por dados reais da API posteriormente
  */
 
-import { Program, Episode, User, Notification, ProgramCategory } from '../types';
+import { Program, Episode, User, Notification, ProgramCategory, Review, ProgramRating } from '../types';
 
 // Mock de usuário
 export const mockUser: User = {
@@ -222,3 +222,242 @@ export const categories: { id: ProgramCategory; name: string; icon: string; colo
   { id: 'stories', name: 'Histórias', icon: '📖', color: '#B8956A' },
   { id: 'courses', name: 'Cursos', icon: '🎓', color: '#8B7D6B' },
 ];
+
+// Reviews/Comentários
+export const mockReviews: Review[] = [
+  {
+    id: 'r1',
+    programId: '1',
+    userId: 'u1',
+    userName: 'Carla Mendes',
+    userAvatar: 'https://i.pravatar.cc/150?img=5',
+    rating: 5,
+    comment: 'Excelente meditação! Comecei a praticar faz 2 semanas e já sinto uma diferença enorme na minha disposição matinal.',
+    experience: 'Me ajudou a começar o dia com mais clareza e foco. Recomendo muito!',
+    createdAt: '2026-02-05T10:30:00.000Z',
+    likes: 24,
+  },
+  {
+    id: 'r2',
+    programId: '1',
+    userId: 'u2',
+    userName: 'Roberto Silva',
+    userAvatar: 'https://i.pravatar.cc/150?img=12',
+    rating: 5,
+    comment: 'Transformou completamente minha rotina matinal.',
+    experience: 'Antes era difícil acordar, agora acordo com energia e motivação. A voz do instrutor é muito calma e agradável.',
+    createdAt: '2026-02-03T14:20:00.000Z',
+    likes: 18,
+  },
+  {
+    id: 'r3',
+    programId: '1',
+    userId: 'u3',
+    userName: 'Ana Paula Costa',
+    userAvatar: 'https://i.pravatar.cc/150?img=9',
+    rating: 4,
+    comment: 'Muito bom, mas achei que poderia ser um pouco mais longo.',
+    experience: 'A meditação é ótima, me sinto mais relaxada e focada. Só gostaria que tivesse uma versão de 20 minutos.',
+    createdAt: '2026-02-01T08:15:00.000Z',
+    likes: 12,
+  },
+  {
+    id: 'r4',
+    programId: '2',
+    userId: 'u4',
+    userName: 'Pedro Oliveira',
+    userAvatar: 'https://i.pravatar.cc/150?img=15',
+    rating: 5,
+    comment: 'Melhor áudio para dormir que já usei!',
+    experience: 'Sofria de insônia há anos. Esse áudio me ajudou a dormir em menos de 15 minutos todas as noites.',
+    createdAt: '2026-02-07T22:45:00.000Z',
+    likes: 34,
+  },
+  {
+    id: 'r5',
+    programId: '3',
+    userId: 'u5',
+    userName: 'Juliana Rocha',
+    userAvatar: 'https://i.pravatar.cc/150?img=20',
+    rating: 5,
+    comment: 'Essencial para quem sofre de ansiedade.',
+    experience: 'As técnicas de respiração são simples mas muito eficazes. Uso todos os dias quando sinto ansiedade chegando.',
+    createdAt: '2026-02-06T16:30:00.000Z',
+    likes: 29,
+  },
+];
+
+// Ratings dos programas
+export const mockProgramRatings: ProgramRating[] = [
+  {
+    programId: '1',
+    averageRating: 4.7,
+    totalReviews: 156,
+    ratingDistribution: {
+      5: 98,
+      4: 42,
+      3: 12,
+      2: 3,
+      1: 1,
+    },
+  },
+  {
+    programId: '2',
+    averageRating: 4.9,
+    totalReviews: 203,
+    ratingDistribution: {
+      5: 178,
+      4: 20,
+      3: 4,
+      2: 1,
+      1: 0,
+    },
+  },
+  {
+    programId: '3',
+    averageRating: 4.6,
+    totalReviews: 87,
+    ratingDistribution: {
+      5: 52,
+      4: 28,
+      3: 6,
+      2: 1,
+      1: 0,
+    },
+  },
+];
+
+// Funções auxiliares para reviews
+export const getReviewsByProgramId = (programId: string): Review[] => {
+  return mockReviews.filter(review => review.programId === programId);
+};
+
+export const getProgramRating = (programId: string): ProgramRating | undefined => {
+  return mockProgramRatings.find(rating => rating.programId === programId);
+};
+
+// Músicas/Áudios para a aba Music
+export interface MusicTrack {
+  id: string;
+  title: string;
+  artist: string;
+  coverImage: string;
+  duration: number; // em segundos
+  category: 'relaxamento' | 'foco' | 'sono' | 'energia' | 'meditacao';
+  isPremium: boolean;
+  audioSource?: number;
+  plays: number;
+}
+
+export const mockMusicTracks: MusicTrack[] = [
+  {
+    id: 'm1',
+    title: 'Ondas do Oceano',
+    artist: 'Natureza Sounds',
+    coverImage: 'https://picsum.photos/seed/ocean/400/400',
+    duration: 1800, // 30 min
+    category: 'relaxamento',
+    isPremium: false,
+    plays: 12400,
+  },
+  {
+    id: 'm2',
+    title: 'Piano Suave ao Entardecer',
+    artist: 'Instrumental Lounge',
+    coverImage: 'https://picsum.photos/seed/piano/400/400',
+    duration: 2400, // 40 min
+    category: 'foco',
+    isPremium: true,
+    plays: 8730,
+  },
+  {
+    id: 'm3',
+    title: 'Chuva na Floresta',
+    artist: 'Ambient Nature',
+    coverImage: 'https://picsum.photos/seed/rain/400/400',
+    duration: 3600, // 60 min
+    category: 'sono',
+    isPremium: false,
+    plays: 15600,
+  },
+  {
+    id: 'm4',
+    title: 'Batidas Binaurais - Foco Profundo',
+    artist: 'Binaural Lab',
+    coverImage: 'https://picsum.photos/seed/binaural/400/400',
+    duration: 2700, // 45 min
+    category: 'foco',
+    isPremium: true,
+    plays: 9240,
+  },
+  {
+    id: 'm5',
+    title: 'Tibetan Singing Bowls',
+    artist: 'Meditation Masters',
+    coverImage: 'https://picsum.photos/seed/tibetan/400/400',
+    duration: 1500, // 25 min
+    category: 'meditacao',
+    isPremium: true,
+    plays: 7890,
+  },
+  {
+    id: 'm6',
+    title: 'Amanhecer Energizante',
+    artist: 'Morning Vibes',
+    coverImage: 'https://picsum.photos/seed/sunrise/400/400',
+    duration: 900, // 15 min
+    category: 'energia',
+    isPremium: false,
+    plays: 11230,
+  },
+  {
+    id: 'm7',
+    title: 'Violão Acústico Relaxante',
+    artist: 'Acoustic Dreams',
+    coverImage: 'https://picsum.photos/seed/guitar/400/400',
+    duration: 2100, // 35 min
+    category: 'relaxamento',
+    isPremium: false,
+    plays: 10450,
+  },
+  {
+    id: 'm8',
+    title: 'Deep Sleep Frequencies',
+    artist: 'Sleep Science',
+    coverImage: 'https://picsum.photos/seed/sleep/400/400',
+    duration: 4800, // 80 min
+    category: 'sono',
+    isPremium: true,
+    plays: 18900,
+  },
+  {
+    id: 'm9',
+    title: 'Flauta Nativa Americana',
+    artist: 'Native Spirit',
+    coverImage: 'https://picsum.photos/seed/flute/400/400',
+    duration: 1800, // 30 min
+    category: 'meditacao',
+    isPremium: true,
+    plays: 6540,
+  },
+  {
+    id: 'm10',
+    title: 'Lo-Fi Beats para Estudar',
+    artist: 'Study Beats',
+    coverImage: 'https://picsum.photos/seed/lofi/400/400',
+    duration: 3000, // 50 min
+    category: 'foco',
+    isPremium: false,
+    plays: 21340,
+  },
+];
+
+export const getMusicByCategory = (category: MusicTrack['category']): MusicTrack[] => {
+  return mockMusicTracks.filter(track => track.category === category);
+};
+
+export const getPopularMusic = (): MusicTrack[] => {
+  return [...mockMusicTracks].sort((a, b) => b.plays - a.plays).slice(0, 5);
+};
+
+

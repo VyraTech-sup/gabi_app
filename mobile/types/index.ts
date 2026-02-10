@@ -99,6 +99,32 @@ export interface Subscription {
   price: number;
 }
 
+export interface Review {
+  id: string;
+  programId: string;
+  userId: string;
+  userName: string;
+  userAvatar?: string;
+  rating: number; // 1-5
+  comment: string;
+  experience: string;
+  createdAt: string;
+  likes: number;
+}
+
+export interface ProgramRating {
+  programId: string;
+  averageRating: number;
+  totalReviews: number;
+  ratingDistribution: {
+    1: number;
+    2: number;
+    3: number;
+    4: number;
+    5: number;
+  };
+}
+
 // Navigation types
 export type RootStackParamList = {
   Onboarding: undefined;

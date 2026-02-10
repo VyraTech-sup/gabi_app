@@ -68,8 +68,8 @@ export default function RootNavigator() {
         {/* 05️⃣ Player do áudio selecionado */}
         <Stack.Screen name="AudioPlayer" component={AudioPlayerScreen} />
 
-        // {/* 06️⃣ Parabéns por terminar (removida conforme solicitado) */}
-        // <Stack.Screen name="StoryCompleted" component={StoryCompletedScreen} />
+        {/* 06️⃣ Parabéns por terminar */}
+        <Stack.Screen name="StoryCompleted" component={StoryCompletedScreen} />
 
         {/* 07️⃣ Vinculação com a conta Google/Apple */}
         <Stack.Screen name="SocialAuth" component={SocialAuthScreen} />
