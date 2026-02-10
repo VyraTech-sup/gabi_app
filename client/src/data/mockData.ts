@@ -23,7 +23,7 @@ export const mockPrograms: Program[] = [
     duration: 900,
     isPremium: false,
     tags: ['manhã', 'energia', 'foco'],
-    instructor: 'Dr. Paulo Mendes',
+    instructor: 'GABRIELA ARTZ',
     episodeCount: 1,
   },
   {
@@ -33,8 +33,9 @@ export const mockPrograms: Program[] = [
     coverImage: 'https://picsum.photos/seed/sleep1/400/300',
     category: 'sleep',
     duration: 3600,
-    isPremium: true,
+    isPremium: false,
     tags: ['sono', 'relaxamento', 'natureza'],
+    instructor: 'GABRIELA ARTZ',
     episodeCount: 8,
   },
   {
@@ -46,7 +47,7 @@ export const mockPrograms: Program[] = [
     duration: 600,
     isPremium: false,
     tags: ['ansiedade', 'respiração', 'calma'],
-    instructor: 'Ana Costa',
+    instructor: 'GABRIELA ARTZ',
     episodeCount: 5,
   },
   {
@@ -56,9 +57,9 @@ export const mockPrograms: Program[] = [
     coverImage: 'https://picsum.photos/seed/work1/400/300',
     category: 'mindfulness',
     duration: 1200,
-    isPremium: true,
+    isPremium: false,
     tags: ['trabalho', 'produtividade', 'mindfulness'],
-    instructor: 'Dr. Carlos Ribeiro',
+    instructor: 'GABRIELA ARTZ',
     episodeCount: 12,
   },
   {
@@ -70,6 +71,7 @@ export const mockPrograms: Program[] = [
     duration: 2400,
     isPremium: false,
     tags: ['música', 'foco', 'relaxamento'],
+    instructor: 'GABRIELA ARTZ',
     episodeCount: 15,
   },
   {
@@ -79,9 +81,9 @@ export const mockPrograms: Program[] = [
     coverImage: 'https://picsum.photos/seed/stories1/400/300',
     category: 'stories',
     duration: 1800,
-    isPremium: true,
+    isPremium: false,
     tags: ['sono', 'histórias', 'relaxamento'],
-    instructor: 'Júlia Santos',
+    instructor: 'GABRIELA ARTZ',
     episodeCount: 20,
   },
   {
@@ -91,9 +93,9 @@ export const mockPrograms: Program[] = [
     coverImage: 'https://picsum.photos/seed/course1/400/300',
     category: 'courses',
     duration: 1500,
-    isPremium: true,
+    isPremium: false,
     tags: ['curso', 'iniciante', 'fundamentos'],
-    instructor: 'Mestre Fernando Lima',
+    instructor: 'GABRIELA ARTZ',
     episodeCount: 30,
   },
   {
@@ -105,7 +107,7 @@ export const mockPrograms: Program[] = [
     duration: 1080,
     isPremium: false,
     tags: ['ansiedade', 'calma', 'saúde mental'],
-    instructor: 'Dra. Beatriz Alves',
+    instructor: 'GABRIELA ARTZ',
     episodeCount: 7,
   },
 ];
@@ -119,7 +121,7 @@ export const mockEpisodes: Episode[] = [
     coverImage: 'https://picsum.photos/seed/rain1/400/300',
     duration: 3600,
     episodeNumber: 1,
-    isPremium: true,
+    isPremium: false,
   },
   {
     id: 'ep2',
@@ -139,7 +141,7 @@ export const mockEpisodes: Episode[] = [
     coverImage: 'https://picsum.photos/seed/intro1/400/300',
     duration: 1200,
     episodeNumber: 1,
-    isPremium: true,
+    isPremium: false,
   },
 ];
 
