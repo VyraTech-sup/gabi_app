@@ -23,7 +23,7 @@ export const mockPrograms: Program[] = [
     duration: 900,
     isPremium: false,
     tags: ['manhã', 'energia', 'foco'],
-    instructor: 'GABRIELA ARTZ',
+    instructor: 'Gabriela Artz',
     episodeCount: 1,
   },
   {
@@ -35,7 +35,7 @@ export const mockPrograms: Program[] = [
     duration: 3600,
     isPremium: false,
     tags: ['sono', 'relaxamento', 'natureza'],
-    instructor: 'GABRIELA ARTZ',
+    instructor: 'Gabriela Artz',
     episodeCount: 8,
   },
   {
@@ -47,7 +47,7 @@ export const mockPrograms: Program[] = [
     duration: 600,
     isPremium: false,
     tags: ['ansiedade', 'respiração', 'calma'],
-    instructor: 'GABRIELA ARTZ',
+    instructor: 'Gabriela Artz',
     episodeCount: 5,
   },
   {
@@ -59,7 +59,7 @@ export const mockPrograms: Program[] = [
     duration: 1200,
     isPremium: false,
     tags: ['trabalho', 'produtividade', 'mindfulness'],
-    instructor: 'GABRIELA ARTZ',
+    instructor: 'Gabriela Artz',
     episodeCount: 12,
   },
   {
@@ -71,7 +71,7 @@ export const mockPrograms: Program[] = [
     duration: 2400,
     isPremium: false,
     tags: ['música', 'foco', 'relaxamento'],
-    instructor: 'GABRIELA ARTZ',
+    instructor: 'Gabriela Artz',
     episodeCount: 15,
   },
   {
@@ -83,7 +83,7 @@ export const mockPrograms: Program[] = [
     duration: 1800,
     isPremium: false,
     tags: ['sono', 'histórias', 'relaxamento'],
-    instructor: 'GABRIELA ARTZ',
+    instructor: 'Gabriela Artz',
     episodeCount: 20,
   },
   {
@@ -95,7 +95,7 @@ export const mockPrograms: Program[] = [
     duration: 1500,
     isPremium: false,
     tags: ['curso', 'iniciante', 'fundamentos'],
-    instructor: 'GABRIELA ARTZ',
+    instructor: 'Gabriela Artz',
     episodeCount: 30,
   },
   {
@@ -107,7 +107,7 @@ export const mockPrograms: Program[] = [
     duration: 1080,
     isPremium: false,
     tags: ['ansiedade', 'calma', 'saúde mental'],
-    instructor: 'GABRIELA ARTZ',
+    instructor: 'Gabriela Artz',
     episodeCount: 7,
   },
 ];

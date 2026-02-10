@@ -1,8 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-
-// Webhook fixo do Zapier
-const ZAPIER_WEBHOOK = 'https://hooks.zapier.com/hooks/catch/24026668/ue90sb1/'
+import { trpc } from '../lib/trpc'
 
 export default function CreateAccountPage() {
   const navigate = useNavigate()
@@ -41,6 +39,11 @@ export default function CreateAccountPage() {
       return
     }
 
+    if (password.length < 6) {
+      setError('A senha deve ter no mínimo 6 caracteres')
+      return
+    }
+
     // Validação básica de email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(email)) {
@@ -48,36 +51,49 @@ export default function CreateAccountPage() {
       return
     }
 
-    // Enviar para Zapier
+    // Criar conta no banco de dados E enviar para planilha
     setLoading(true)
     try {
-      const response = await fetch(ZAPIER_WEBHOOK, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: name.trim(),
-          email: email.trim().toLowerCase(),
-          phone: phone.trim(),
-          created_at: new Date().toISOString(),
-          source: 'all_mind_web',
-        }),
+      // 1. Criar conta no banco de dados
+      const result = await trpc.auth.register.mutate({
+        email: email.trim().toLowerCase(),
+        password: password,
+        name: name.trim(),
+        phone: phone.trim(),
       })
 
-      // Zapier aceita a requisição com status 2xx
-      // Navegamos para sucesso mesmo sem resposta válida
-      if (response.status >= 200 && response.status < 300) {
+      if (result.success) {
+        // 2. Enviar para planilha do Zapier (não bloqueia se falhar)
+        try {
+          const formData = new URLSearchParams({
+            name: name.trim(),
+            email: email.trim().toLowerCase(),
+            phone: phone.trim(),
+            created_at: new Date().toISOString(),
+            source: 'all_mind_web',
+          })
+
+          await fetch('https://hooks.zapier.com/hooks/catch/24026668/ue90sb1/', {
+            method: 'POST',
+            body: formData,
+          })
+        } catch (zapierError) {
+          // Se falhar o Zapier, não importa - conta já foi criada
+          console.warn('Falha ao enviar para planilha:', zapierError)
+        }
+
+        // Conta criada e usuário logado automaticamente
         navigate('/success-account')
       } else {
-        console.warn('Status do webhook:', response.status)
-        // Mesmo com erro, criar conta localmente e navegar
-        navigate('/success-account')
+        setError('Erro ao criar conta. Tente novamente.')
       }
-    } catch (error) {
-      console.error('Erro ao criar conta:', error)
-      // Mesmo com erro de rede, criar conta localmente
-      navigate('/success-account')
+    } catch (err: any) {
+      console.error('Erro ao criar conta:', err)
+      if (err.message?.includes('already registered')) {
+        setError('Este email já está cadastrado. Faça login.')
+      } else {
+        setError(err.message || 'Erro ao criar conta. Tente novamente.')
+      }
     } finally {
       setLoading(false)
     }

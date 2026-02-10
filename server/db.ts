@@ -2,6 +2,7 @@ import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import { InsertUser, users } from "../drizzle/schema";
 import { ENV } from './_core/env';
+import bcrypt from 'bcrypt';
 
 let _db: ReturnType<typeof drizzle> | null = null;
 
@@ -94,6 +95,95 @@ export async function getUserById(userId: number) {
   if (!db) return undefined;
   const result = await db.select().from(users).where(eq(users.id, userId)).limit(1);
   return result.length > 0 ? result[0] : undefined;
+}
+
+export async function getUserByEmail(email: string) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get user: database not available");
+    return undefined;
+  }
+
+  const result = await db.select().from(users).where(eq(users.email, email)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function createUserWithPassword(data: {
+  email: string;
+  password: string;
+  name?: string;
+  phone?: string;
+}): Promise<{ success: boolean; userId?: number; error?: string }> {
+  const db = await getDb();
+  if (!db) {
+    return { success: false, error: "Database not available" };
+  }
+
+  try {
+    // Verificar se o email já existe
+    const existingUser = await getUserByEmail(data.email);
+    if (existingUser) {
+      return { success: false, error: "Email already registered" };
+    }
+
+    // Hash da senha
+    const hashedPassword = await bcrypt.hash(data.password, 10);
+
+    // Criar usuário
+    const result = await db.insert(users).values({
+      email: data.email,
+      password: hashedPassword,
+      name: data.name || null,
+      phone: data.phone || null,
+      loginMethod: 'email',
+      role: 'user',
+      lastSignedIn: new Date(),
+    });
+
+    return { 
+      success: true, 
+      userId: Number(result[0].insertId)
+    };
+  } catch (error) {
+    console.error("[Database] Failed to create user:", error);
+    return { success: false, error: "Failed to create user" };
+  }
+}
+
+export async function authenticateUser(email: string, password: string): Promise<{
+  success: boolean;
+  user?: typeof users.$inferSelect;
+  error?: string;
+}> {
+  const db = await getDb();
+  if (!db) {
+    return { success: false, error: "Database not available" };
+  }
+
+  try {
+    const user = await getUserByEmail(email);
+    
+    if (!user || !user.password) {
+      return { success: false, error: "Invalid email or password" };
+    }
+
+    const isValid = await bcrypt.compare(password, user.password);
+    
+    if (!isValid) {
+      return { success: false, error: "Invalid email or password" };
+    }
+
+    // Atualizar lastSignedIn
+    await db
+      .update(users)
+      .set({ lastSignedIn: new Date() })
+      .where(eq(users.id, user.id));
+
+    return { success: true, user };
+  } catch (error) {
+    console.error("[Database] Authentication failed:", error);
+    return { success: false, error: "Authentication failed" };
+  }
 }
 
 // TODO: add feature queries here as your schema grows.

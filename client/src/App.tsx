@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import OnboardingPage from './pages/OnboardingPage'
 import CreateAccountPage from './pages/CreateAccountPage'
+import LoginPage from './pages/LoginPage'
 import SuccessAccountPage from './pages/SuccessAccountPage'
 import MentalRecordingChoicePage from './pages/MentalRecordingChoicePage'
 import PreparationPage from './pages/PreparationPage'
@@ -21,6 +22,7 @@ function App() {
         <Route path="/" element={<Navigate to="/onboarding" replace />} />
         <Route path="/onboarding" element={<OnboardingPage />} />
         <Route path="/create-account" element={<CreateAccountPage />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/success-account" element={<SuccessAccountPage />} />
         
         {/* 02 - Inicie sua reprogramação mental */}

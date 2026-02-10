@@ -7,6 +7,7 @@ import { RootStackParamList } from '../../navigation/types';
 import { theme } from '../../styles/theme';
 import { useAuth } from '../../contexts/AuthContext';
 import Svg, { Circle, G, Path, Polygon } from 'react-native-svg';
+import { getAudioById, getAudioSource } from '../../data/audioLibrary';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'AudioPlayer'>;
 
@@ -29,7 +30,8 @@ export default function AudioPlayerScreen({ route }: AudioPlayerScreenProps) {
   const [duration, setDuration] = useState(0);
   
   const audioId = route?.params?.audioId;
-  const audioTitle = route?.params?.audioTitle || 'Autocura';
+  const audioData = audioId ? getAudioById(audioId) : null;
+  const audioTitle = audioData?.title || route?.params?.audioTitle || 'Áudio';
 
   useEffect(() => {
     loadAudio();
@@ -42,22 +44,33 @@ export default function AudioPlayerScreen({ route }: AudioPlayerScreenProps) {
 
   const loadAudio = async () => {
     try {
-      // Mapear audioId para o arquivo correto
-      const audioFiles: { [key: string]: any } = {
-        '2': require('../../assets/audio_insonia.opus'),
-        '3': require('../../assets/AUTOHIPNOSE_AUTOCONFIANCA.mp3'),
-        '4': require('../../assets/AUTOHIPNOSE_FELICIDADEmix.mp3'),
-        '5': require('../../assets/fe_autocura.opus'),
-        '6': require('../../assets/mentalidade_mudancas.mp3.mp4'),
-      };
+      if (!audioData) {
+        console.error('Áudio não encontrado');
+        return;
+      }
+
+      const audioFile = getAudioSource(audioData.fileName);
       
-      const audioFile = audioId && audioFiles[audioId] ? audioFiles[audioId] : require('../../assets/fe_autocura.opus');
+      if (!audioFile) {
+        console.error('Arquivo de áudio não encontrado:', audioData.fileName);
+        return;
+      }
+
+      // Configurar áudio para background e notificações
+      await Audio.setAudioModeAsync({
+        allowsRecordingIOS: false,
+        staysActiveInBackground: true,
+        playsInSilentModeIOS: true,
+        shouldDuckAndroid: true,
+        playThroughEarpieceAndroid: false,
+      });
       
       const { sound: newSound } = await Audio.Sound.createAsync(
         audioFile,
         { shouldPlay: false },
         onPlaybackStatusUpdate
       );
+      
       setSound(newSound);
     } catch (error) {
       console.error('Erro ao carregar áudio:', error);

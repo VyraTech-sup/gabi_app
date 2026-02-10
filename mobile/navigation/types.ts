@@ -35,6 +35,7 @@ export type RootStackParamList = {
   
   // Player
   Player: { programId: string; episodeId: string };
+  AudioLibrary: undefined;
   
   // Profile
   Notifications: undefined;

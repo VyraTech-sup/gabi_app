@@ -27,6 +27,7 @@ import MusicScreen from '../screens/MusicScreen';
 import ProgramDetailScreen from '../screens/Programs/ProgramDetailScreen';
 import ProgramsScreen from '../screens/Programs/ProgramsScreen';
 import PlayerScreen from '../screens/Player/PlayerScreen';
+import AudioLibraryScreen from '../screens/Library/AudioLibraryScreen';
 import NotificationsScreen from '../screens/Profile/NotificationsScreen';
 import SubscriptionScreen from '../screens/Profile/SubscriptionScreen';
 import SettingsScreen from '../screens/Settings/SettingsScreen';
@@ -93,6 +94,7 @@ export default function RootNavigator() {
 
         {/* Extras internos do app */}
         <Stack.Screen name="Player" component={PlayerScreen} />
+        <Stack.Screen name="AudioLibrary" component={AudioLibraryScreen} />
         <Stack.Screen name="Notifications" component={NotificationsScreen} />
         <Stack.Screen name="Settings" component={SettingsScreen} />
         <Stack.Screen name="EnableNotifications" component={EnableNotificationsScreen} />
