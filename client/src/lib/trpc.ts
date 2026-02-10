@@ -14,12 +14,26 @@ if (!API_OK) {
 
 export const API_BASE_URL = API_BASE;
 export const isApiAvailable = API_OK;
+// Provide a safe fetch wrapper that rejects on non-2xx responses with readable text
+const safeFetch: typeof fetch = async (input: RequestInfo, init?: RequestInit) => {
+  const res = await fetch(input, init)
+  if (!res.ok) {
+    const text = await res.text().catch(() => '')
+    throw new Error(`HTTP ${res.status} ${res.statusText}: ${text}`)
+  }
+  return res
+}
+
+const fetchImpl = API_OK ? safeFetch : async () => {
+  throw new Error('VITE_API_URL is not configured or invalid; blocking tRPC calls')
+}
 
 export const trpc = createTRPCProxyClient<AppRouter>({
   links: [
     httpBatchLink({
       url: API_OK ? `${API_BASE}/api/trpc` : 'about:blank',
       credentials: 'include', // Importante para cookies
+      fetch: fetchImpl as any,
     }),
   ],
 });

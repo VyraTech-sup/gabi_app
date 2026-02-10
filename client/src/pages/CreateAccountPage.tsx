@@ -96,11 +96,17 @@ export default function CreateAccountPage() {
       }
     } catch (err: any) {
       console.error('Erro ao criar conta:', err)
-      // Handle common causes: backend unreachable / non-JSON response
+      // Handle common causes: backend unreachable / non-JSON response / HTTP errors
       const msg = String(err?.message || '')
       if (msg.includes('already registered')) {
         setError('Este email já está cadastrado. Faça login.')
-      } else if (msg.includes('Unexpected end of JSON input') || msg.includes('Failed to fetch') || msg.includes('NetworkError')) {
+      } else if (
+        msg.includes('Unexpected end of JSON input') ||
+        msg.includes('Failed to fetch') ||
+        msg.includes('NetworkError') ||
+        msg.includes('HTTP') ||
+        /\b[45]\d{2}\b/.test(msg)
+      ) {
         setError('Erro de comunicação com o servidor. Tente novamente mais tarde.')
       } else {
         setError(err.message || 'Erro ao criar conta. Tente novamente.')

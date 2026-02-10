@@ -43,7 +43,12 @@ export default function LoginPage() {
       }
     } catch (err: any) {
       console.error('Erro ao fazer login:', err)
-      setError('Email ou senha inválidos')
+      const msg = String(err?.message || '')
+      if (msg.includes('HTTP') || /\b[45]\d{2}\b/.test(msg) || msg.includes('Failed to fetch') || msg.includes('NetworkError')) {
+        setError('Erro de comunicação com o servidor. Tente novamente mais tarde.')
+      } else {
+        setError('Email ou senha inválidos')
+      }
     } finally {
       setLoading(false)
     }
