@@ -22,6 +22,28 @@ export default function OnboardingPage() {
           alt="Onboarding 1"
           style={{ width: '100%', height: '100%', objectFit: 'cover' }}
         />
+        
+        {/* Botão Criar Conta - Centralizado na parte inferior */}
+        <div style={{ position: 'absolute', bottom: 100, left: 20, right: 20, display: 'flex', justifyContent: 'center', zIndex: 10 }}>
+          <button
+            onClick={() => navigate('/create-account')}
+            style={{
+              background: '#FFFFFF',
+              border: 'none',
+              borderRadius: '12px',
+              padding: '16px 48px',
+              fontSize: '18px',
+              fontWeight: 'bold',
+              color: '#3A5A6C',
+              cursor: 'pointer',
+              minWidth: '200px',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.25)',
+            }}
+          >
+            Criar conta
+          </button>
+        </div>
+
         <div style={{ position: 'absolute', bottom: 40, right: 20 }}>
           <button 
             onClick={() => setStep(2)}
