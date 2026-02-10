@@ -8,6 +8,8 @@ export type RootStackParamList = {
   
   // Auth
   Onboarding: undefined;
+  CreateAccount: undefined;
+  SuccessAccount: undefined;
   OnboardingCountdown: undefined;
   Login: undefined;
   Register: undefined;

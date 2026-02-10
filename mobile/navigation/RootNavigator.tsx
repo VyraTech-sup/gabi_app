@@ -8,6 +8,8 @@ import { theme } from '../styles/theme';
 import { RootStackParamList } from './types';
 
 import OnboardingScreen from '../screens/Auth/OnboardingScreen';
+import CreateAccountScreen from '../screens/Auth/CreateAccountScreen';
+import SuccessAccountScreen from '../screens/Auth/SuccessAccountScreen';
 import SocialAuthScreen from '../screens/Auth/SocialAuthScreen';
 import MentalRecordingChoiceScreen from '../screens/MentalRecording/MentalRecordingChoiceScreen';
 import PreparationScreen from '../screens/MentalRecording/PreparationScreen';
@@ -55,6 +57,8 @@ export default function RootNavigator() {
 
         {/* 01️⃣ Onboarding (slides, cadastro, login) */}
         <Stack.Screen name="Onboarding" component={OnboardingScreen} />
+        <Stack.Screen name="CreateAccount" component={CreateAccountScreen} />
+        <Stack.Screen name="SuccessAccount" component={SuccessAccountScreen} />
 
         {/* 02️⃣ Lista dos áudios/programas */}
         <Stack.Screen name="Programs" component={ProgramsScreen} />

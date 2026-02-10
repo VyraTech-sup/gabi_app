@@ -176,6 +176,16 @@ export default function OnboardingScreen() {
         style={styles.fullScreen}
         resizeMode="cover"
       >
+        {/* Botão Criar Conta - Centralizado na parte inferior */}
+        <View style={styles.createAccountContainer}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('CreateAccount' as never)}
+            style={styles.createAccountButton}
+          >
+            <Text style={styles.createAccountText}>Criar conta</Text>
+          </TouchableOpacity>
+        </View>
+
         <View style={styles.navControls}>
           <TouchableOpacity onPress={() => setStep(2)} style={styles.navButton}>
             <Text style={styles.navText}>→</Text>
@@ -484,6 +494,33 @@ const styles = StyleSheet.create({
   navText: {
     fontSize: 28,
     color: '#000',
+  },
+  createAccountContainer: {
+    position: 'absolute',
+    bottom: 100,
+    left: 20,
+    right: 20,
+    alignItems: 'center',
+    zIndex: 10,
+  },
+  createAccountButton: {
+    backgroundColor: '#FFFFFF',
+    paddingVertical: 16,
+    paddingHorizontal: 48,
+    borderRadius: 12,
+    minWidth: 200,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  createAccountText: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#3A5A6C',
+    textAlign: 'center',
   },
   choiceContainer: {
     flex: 1,
