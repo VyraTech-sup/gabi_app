@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { trpc } from '../lib/trpc'
+import { trpc, isApiAvailable, API_BASE_URL } from '../lib/trpc'
 
 export default function CreateAccountPage() {
   const navigate = useNavigate()
@@ -17,6 +17,13 @@ export default function CreateAccountPage() {
   const handleCreateAccount = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
+
+    // Defensive: block API calls if VITE_API_URL is not configured correctly
+    if (!isApiAvailable) {
+      console.error('[CreateAccount] API unavailable. VITE_API_URL=', API_BASE_URL)
+      setError('Serviço indisponível no momento. Contate o suporte.')
+      return
+    }
 
     // Validar campos
     if (!name.trim()) {

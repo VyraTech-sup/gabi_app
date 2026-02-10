@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { trpc } from '../lib/trpc'
+import { trpc, isApiAvailable, API_BASE_URL } from '../lib/trpc'
 
 export default function LoginPage() {
   const navigate = useNavigate()
@@ -13,6 +13,12 @@ export default function LoginPage() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
+
+    if (!isApiAvailable) {
+      console.error('[Login] API unavailable. VITE_API_URL=', API_BASE_URL)
+      setError('Serviço indisponível no momento. Contate o suporte.')
+      return
+    }
 
     if (!email.trim()) {
       setError('Por favor, preencha seu email')
