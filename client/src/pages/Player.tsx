@@ -1,6 +1,58 @@
 import { useState, useRef, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
+// Lista de programas com áudios reais
+const PROGRAMS_MAP: Record<string, {
+  id: string;
+  title: string;
+  description: string;
+  audioUrl: string;
+  emoji: string;
+}> = {
+  '1': {
+    id: '1',
+    title: 'Ative Fé e Autocura',
+    description: 'Reconecte-se com sua fé interior e ative o poder de autocura',
+    audioUrl: '/assets/ativefeeautocura.mp3',
+    emoji: '🌸'
+  },
+  '2': {
+    id: '2',
+    title: 'Elimine a Insônia',
+    description: 'Encontre paz e equilíbrio para um sono profundo e reparador',
+    audioUrl: '/assets/elimineainsonia.mp3',
+    emoji: '🧘‍♀️'
+  },
+  '3': {
+    id: '3',
+    title: 'Se Abra Para Mudanças',
+    description: 'Prepare-se para transformações positivas em sua vida',
+    audioUrl: '/assets/seabraparamudanças.mp4',
+    emoji: '💕'
+  },
+  '4': {
+    id: '4',
+    title: 'Ative a Felicidade',
+    description: 'Reprograme sua mente para atrair alegria e bem-estar',
+    audioUrl: '/assets/ativeafelicidade.mp3',
+    emoji: '💰'
+  },
+  '5': {
+    id: '5',
+    title: 'Fortaleça a Autoconfiança',
+    description: 'Desenvolva uma autoestima sólida e inabalável',
+    audioUrl: '/assets/fortaleçaaautoconfiança.mp3',
+    emoji: '😴'
+  },
+  '6': {
+    id: '6',
+    title: 'Autoconfiança',
+    description: 'Fortaleça sua autoestima',
+    audioUrl: '/assets/fortaleçaaautoconfiança.mp3',
+    emoji: '💪'
+  }
+};
+
 export default function Player() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -10,14 +62,8 @@ export default function Player() {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
 
-  // Mock data - em produção viria de uma API
-  const program = {
-    id,
-    title: 'Autocuidado e Feminino',
-    description: 'Reconecte-se com sua essência feminina',
-    audioUrl: '/assets/audio_sample.mp3', // Placeholder
-    emoji: '🌸'
-  };
+  // Pega o programa baseado no ID da URL
+  const program = PROGRAMS_MAP[id || '1'] || PROGRAMS_MAP['1'];
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -41,16 +87,23 @@ export default function Player() {
     };
   }, [navigate]);
 
-  const togglePlay = () => {
+  const togglePlay = async () => {
     const audio = audioRef.current;
     if (!audio) return;
 
-    if (isPlaying) {
-      audio.pause();
-    } else {
-      audio.play();
+    try {
+      if (isPlaying) {
+        audio.pause();
+        setIsPlaying(false);
+      } else {
+        await audio.play();
+        setIsPlaying(true);
+      }
+    } catch (error) {
+      console.error('Erro ao tocar áudio:', error);
+      // Tenta novamente após interação do usuário
+      alert('Toque novamente para iniciar o áudio');
     }
-    setIsPlaying(!isPlaying);
   };
 
   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,6 +116,7 @@ export default function Player() {
   };
 
   const formatTime = (seconds: number) => {
+    if (isNaN(seconds)) return '0:00';
     const mins = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
     return `${mins}:${secs.toString().padStart(2, '0')}`;
@@ -70,7 +124,7 @@ export default function Player() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#3A5A6C] to-[#2D4A57] flex flex-col items-center justify-center p-8">
-      <audio ref={audioRef} src={program.audioUrl} />
+      <audio ref={audioRef} src={program.audioUrl} preload="metadata" />
 
       {/* Back button */}
       <button
