@@ -27,8 +27,8 @@ export interface PurchaseResult {
   error?: string;
 }
 
-let purchaseUpdateSubscription: any = null;
-let purchaseErrorSubscription: any = null;
+const purchaseUpdateSubscription: any = null;
+const purchaseErrorSubscription: any = null;
 
 /**
  * Inicializa o serviço de compras

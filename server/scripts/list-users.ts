@@ -1,5 +1,5 @@
 import { getDb } from '../db';
-import { users } from '../../drizzle/schema';
+import { users, type User } from '../../drizzle/schema';
 
 async function listUsers() {
   const db = await getDb();
@@ -10,7 +10,7 @@ async function listUsers() {
 
   console.log('\n📋 USUÁRIOS NO BANCO DE DADOS:\n');
   
-  const allUsers = await db.select().from(users);
+  const allUsers: User[] = await db.select().from(users);
   
   if (allUsers.length === 0) {
     console.log('Nenhum usuário encontrado.');

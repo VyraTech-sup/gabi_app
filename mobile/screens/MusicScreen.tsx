@@ -75,7 +75,7 @@ export default function MusicScreen({ navigation }: MusicScreenProps) {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>🔥 Mais Ouvidas</Text>
           <ScrollView 
-            horizontal 
+            horizontal={true} 
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.popularList}
           >
@@ -101,7 +101,7 @@ export default function MusicScreen({ navigation }: MusicScreenProps) {
         {/* Category Filter */}
         <View style={styles.section}>
           <ScrollView 
-            horizontal 
+            horizontal={true} 
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.categoryList}
           >

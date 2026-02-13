@@ -9,7 +9,7 @@ interface ProgramCardProps {
   horizontal?: boolean;
 }
 
-export default function ProgramCard({ program, onPress, horizontal = false }: ProgramCardProps) {
+export default function ProgramCard({ program, onPress }: ProgramCardProps) {
   const formatDuration = (seconds: number): string => {
     const minutes = Math.floor(seconds / 60);
     if (minutes < 60) {

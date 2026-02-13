@@ -1,6 +1,5 @@
 {
   "include": [
-    "client/src/**/*",
     "shared/**/*",
     "server/**/*"
   ],
@@ -28,13 +27,9 @@
     "moduleResolution": "bundler",
     "baseUrl": ".",
     "types": [
-      "node",
-      "vite/client"
+      "node"
     ],
     "paths": {
-      "@/*": [
-        "./client/src/*"
-      ],
       "@shared/*": [
         "./shared/*"
       ]

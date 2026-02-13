@@ -112,7 +112,7 @@ export default function ExploreScreen({ navigation, route }: ExploreScreenProps)
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Tags populares</Text>
           <View style={styles.tags}>
-            {['Ansiedade', 'Sono', 'Foco', 'Relaxamento', 'Manhã', 'Noite', 'Respiração'].map((tag) => (
+            {['Tranquilidade', 'Sono', 'Foco', 'Relaxamento', 'Manhã', 'Noite', 'Respiração'].map((tag) => (
               <TouchableOpacity key={tag} style={styles.tag}>
                 <Text style={styles.tagText}>{tag}</Text>
               </TouchableOpacity>

@@ -1,0 +1,14 @@
+# Usado quando o build sobe a raiz do repo (monorepo).
+# Assim o archive fica menor e o projectRoot "mobile" em eas.json é usado.
+server/
+drizzle/
+shared/
+expo/
+node_modules/
+.git/
+*.md
+!mobile/README.md
+package-lock.json
+drizzle.config.ts
+tsconfig.json
+.expo/

@@ -2,7 +2,6 @@ export type RootStackParamList = {
     SocialAuth: undefined;
     AccessGranted: undefined;
     Music: undefined;
-    Settings: undefined;
   // Intro
   Intro: undefined;
   
@@ -40,7 +39,7 @@ export type RootStackParamList = {
   // Profile
   Notifications: undefined;
   Subscription: undefined;
-  UnlockAll Mind: undefined;
+  UnlockAlmaSense: undefined;
   
   // Settings
   Settings: undefined;

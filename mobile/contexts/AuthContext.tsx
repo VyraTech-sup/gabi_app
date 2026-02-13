@@ -4,7 +4,6 @@
  */
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { signInWithGoogle } from '../services/googleAuth';
 import {
   getUserData,
   saveUserData,
@@ -289,24 +288,27 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   // Login Google OAuth
   const signInWithGoogleHandler = async () => {
-    try {
-      const result = await signInWithGoogle();
-      const googleUser = {
-        id: result.user.email, // ou outro identificador único
-        name: result.user.name,
-        email: result.user.email,
-        isPremium: false,
-        createdAt: new Date().toISOString(),
-        avatar: result.user.picture,
-      };
-      await saveUserData(googleUser);
-      await setAuthenticated(true);
-      setUser(googleUser);
-      setIsAuthenticatedState(true);
-    } catch (error) {
-      console.error('Erro no login Google:', error);
-      throw error;
-    }
+    // TODO: Implementar após atualizar expo-auth-session
+    throw new Error('Google Auth precisa ser atualizado para nova API do expo-auth-session');
+    
+    // try {
+    //   const result = await signInWithGoogle();
+    //   const googleUser = {
+    //     id: result.user.email,
+    //     name: result.user.name,
+    //     email: result.user.email,
+    //     isPremium: false,
+    //     createdAt: new Date().toISOString(),
+    //     avatar: result.user.picture,
+    //   };
+    //   await saveUserData(googleUser);
+    //   await setAuthenticated(true);
+    //   setUser(googleUser);
+    //   setIsAuthenticatedState(true);
+    // } catch (error) {
+    //   console.error('Erro no login Google:', error);
+    //   throw error;
+    // }
   };
 
   return (

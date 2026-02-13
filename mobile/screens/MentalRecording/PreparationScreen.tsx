@@ -14,14 +14,14 @@ export default function PreparationScreen() {
   useEffect(() => {
     // Auto-navega após 4 segundos
     const timer = setTimeout(() => {
-      navigation.navigate('AudioPlayer');
+      navigation.navigate('AudioPlayer', {});
     }, 4000);
 
     return () => clearTimeout(timer);
   }, [navigation]);
 
   const handleTap = () => {
-    navigation.navigate('AudioPlayer');
+    navigation.navigate('AudioPlayer', {});
   };
 
   return (

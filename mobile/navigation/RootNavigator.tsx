@@ -30,6 +30,7 @@ import PlayerScreen from '../screens/Player/PlayerScreen';
 import AudioLibraryScreen from '../screens/Library/AudioLibraryScreen';
 import NotificationsScreen from '../screens/Profile/NotificationsScreen';
 import SubscriptionScreen from '../screens/Profile/SubscriptionScreen';
+import UnlockAlmaSenseScreen from '../screens/Profile/UnlockAlmaSenseScreen';
 import SettingsScreen from '../screens/Settings/SettingsScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -96,6 +97,7 @@ export default function RootNavigator() {
         <Stack.Screen name="Player" component={PlayerScreen} />
         <Stack.Screen name="AudioLibrary" component={AudioLibraryScreen} />
         <Stack.Screen name="Notifications" component={NotificationsScreen} />
+        <Stack.Screen name="UnlockAlmaSense" component={UnlockAlmaSenseScreen} />
         <Stack.Screen name="Settings" component={SettingsScreen} />
         <Stack.Screen name="EnableNotifications" component={EnableNotificationsScreen} />
         <Stack.Screen name="ScheduleNotification" component={ScheduleNotificationScreen} />

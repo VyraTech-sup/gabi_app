@@ -1,74 +1,123 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking, Alert } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import Purchases from 'react-native-purchases';
 import { RootStackParamList } from '../../navigation/types';
 import { theme } from '../../styles/theme';
 import Button from '../../components/Button';
 import Icon from '../../components/Icon';
 import { useAuth } from '../../contexts/AuthContext';
-import { purchaseSubscription } from '../../services/inAppPurchase';
+import { setSubscriptionData, setPremiumStatus } from '../../services/storage';
+import { PRIVACY_POLICY_URL, TERMS_OF_USE_URL } from '../../constants';
 
-interface UnlockAll MindScreenProps {
+interface UnlockAlmaSenseScreenProps {
   navigation: NativeStackNavigationProp<RootStackParamList>;
 }
 
-export default function UnlockAll MindScreen({ navigation }: UnlockAll MindScreenProps) {
+function planFromProductId(productId: string): 'monthly' | 'yearly' {
+  return productId?.toLowerCase().includes('year') ? 'yearly' : 'monthly';
+}
+
+export default function UnlockAlmaSenseScreen({ navigation }: UnlockAlmaSenseScreenProps) {
   const { activateSubscription } = useAuth();
   const [selectedPlan, setSelectedPlan] = useState<'monthly' | 'yearly'>('yearly');
   const [isProcessing, setIsProcessing] = useState(false);
+  const [packages, setPackages] = useState<{ monthly?: { identifier: string; product?: { identifier?: string } }; yearly?: { identifier: string; product?: { identifier?: string } } }>({});
+
+  useEffect(() => {
+    let mounted = true;
+    Purchases.getOfferings()
+      .then((offerings) => {
+        if (!mounted) return;
+        const all = offerings?.current?.availablePackages ?? [];
+        const monthly = all.find((p) => p.identifier === 'monthly' || p.product?.identifier?.toLowerCase().includes('monthly'));
+        const yearly = all.find((p) => p.identifier === 'yearly' || p.product?.identifier?.toLowerCase().includes('yearly'));
+        setPackages({ monthly, yearly });
+      })
+      .catch(() => {});
+    return () => { mounted = false; };
+  }, []);
+
+  const applyPurchaseAndNavigate = async (plan: 'monthly' | 'yearly') => {
+    await setSubscriptionData({
+      plan,
+      status: 'active',
+      startDate: new Date().toISOString(),
+      endDate: plan === 'yearly' ? new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString() : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+    });
+    await setPremiumStatus(true);
+    await activateSubscription(plan);
+    Alert.alert(
+      'Assinatura ativada! 🎉',
+      'Agora você tem acesso completo ao All Mind',
+      [{ text: 'Começar', onPress: () => navigation.navigate('Main') }]
+    );
+  };
 
   const handleSubscribe = async () => {
     try {
       setIsProcessing(true);
-      
-      // Processar compra com Apple/Google In-App Purchase
-      const result = await purchaseSubscription(selectedPlan);
-      
-      if (result.success) {
-        // Ativar assinatura
-        await activateSubscription(selectedPlan);
-        
-        Alert.alert(
-          'Assinatura ativada! 🎉',
-          'Agora você tem acesso completo ao All Mind',
-          [
-            {
-              text: 'Começar',
-              onPress: () => navigation.navigate('Main'),
-            },
-          ]
-        );
-      } else {
-        Alert.alert(
-          'Erro na assinatura',
-          result.error || 'Não foi possível processar seu pagamento. Tente novamente.',
-          [{ text: 'OK' }]
-        );
+      const pkg = selectedPlan === 'yearly' ? packages.yearly : packages.monthly;
+      const toPurchase = pkg ?? (await Purchases.getOfferings()).current?.availablePackages?.[0];
+      if (!toPurchase) {
+        Alert.alert('Erro', 'Nenhuma oferta disponível no momento. Tente novamente mais tarde.');
+        return;
       }
-    } catch (error) {
-      console.error('Erro ao processar assinatura:', error);
+      const { customerInfo } = await Purchases.purchasePackage(toPurchase as Parameters<typeof Purchases.purchasePackage>[0]);
+      const ent = Object.values(customerInfo?.entitlements?.active ?? {})[0] as { productIdentifier?: string } | undefined;
+      const plan = ent?.productIdentifier ? planFromProductId(ent.productIdentifier) : selectedPlan;
+      await applyPurchaseAndNavigate(plan);
+    } catch (e: unknown) {
+      const err = e as { userCancelled?: boolean };
+      if (err?.userCancelled) return;
       Alert.alert(
         'Erro',
-        'Ocorreu um erro ao processar sua assinatura. Tente novamente.',
-        [{ text: 'OK' }]
+        'Não foi possível processar seu pagamento. Tente novamente.'
       );
     } finally {
       setIsProcessing(false);
     }
   };
 
+  const handleRestore = async () => {
+    try {
+      setIsProcessing(true);
+      const customerInfo = await Purchases.restorePurchases();
+      const active = customerInfo?.entitlements?.active ?? {};
+      const ent = Object.values(active)[0] as { productIdentifier?: string; expirationDate?: string; latestPurchaseDate?: string } | undefined;
+      if (ent) {
+        const plan = planFromProductId(ent.productIdentifier ?? '');
+        await setSubscriptionData({
+          plan,
+          status: 'active',
+          startDate: ent.latestPurchaseDate ?? new Date().toISOString(),
+          endDate: ent.expirationDate,
+        });
+        await setPremiumStatus(true);
+        await activateSubscription(plan);
+        Alert.alert('Compras restauradas', 'Sua assinatura foi restaurada com sucesso.', [
+          { text: 'OK', onPress: () => navigation.navigate('Main') },
+        ]);
+      } else {
+        Alert.alert('Nenhuma compra encontrada', 'Não encontramos assinaturas ativas para restaurar.');
+      }
+    } catch {
+      Alert.alert('Erro', 'Não foi possível restaurar suas compras. Tente novamente.');
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
   const handlePromoCode = () => {
-    // TODO: Implementar tela de código promocional
-    console.log('Abrir tela de código promocional');
+    Alert.alert(
+      'Código Promocional',
+      'Esta funcionalidade estará disponível em breve.',
+      [{ text: 'OK' }]
+    );
   };
 
-  const openTerms = () => {
-    Linking.openURL('https://All Mind.vercel.app/terms');
-  };
-
-  const openPrivacy = () => {
-    Linking.openURL('https://All Mind.vercel.app/privacy');
-  };
+  const openTerms = () => Linking.openURL(TERMS_OF_USE_URL);
+  const openPrivacy = () => Linking.openURL(PRIVACY_POLICY_URL);
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -97,7 +146,7 @@ export default function UnlockAll MindScreen({ navigation }: UnlockAll MindScree
 
       {/* Stories Preview (Cards) */}
       <View style={styles.storiesPreview}>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.storiesScroll}>
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.storiesScroll}>
           <StoryPreviewCard number={1} />
           <StoryPreviewCard number={2} />
           <StoryPreviewCard number={3} />
@@ -149,6 +198,13 @@ export default function UnlockAll MindScreen({ navigation }: UnlockAll MindScree
           loading={isProcessing}
           disabled={isProcessing}
         />
+        <TouchableOpacity
+          onPress={handleRestore}
+          disabled={isProcessing}
+          style={styles.restoreButton}
+        >
+          <Text style={styles.restoreText}>Restaurar Compras</Text>
+        </TouchableOpacity>
       </View>
 
       {/* Link Código Promocional */}
@@ -389,6 +445,17 @@ const styles = StyleSheet.create({
   subscribeSection: {
     paddingHorizontal: theme.spacing.xl,
     marginBottom: theme.spacing.lg,
+  },
+  restoreButton: {
+    paddingVertical: theme.spacing.md,
+    alignItems: 'center',
+    marginTop: theme.spacing.sm,
+  },
+  restoreText: {
+    fontSize: theme.typography.fontSize.sm,
+    color: theme.colors.primary,
+    fontWeight: theme.typography.fontWeight.medium,
+    textDecorationLine: 'underline',
   },
   complianceSection: {
     paddingHorizontal: theme.spacing.xl,

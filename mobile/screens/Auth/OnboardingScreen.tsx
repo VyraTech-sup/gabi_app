@@ -184,6 +184,12 @@ export default function OnboardingScreen() {
           >
             <Text style={styles.createAccountText}>Criar conta</Text>
           </TouchableOpacity>
+          
+          {/* Disclaimer Médico */}
+          <Text style={styles.disclaimerText}>
+            Este app oferece conteúdo de bem-estar e não substitui{'\n'}
+            tratamento médico ou psicológico profissional.
+          </Text>
         </View>
 
         <View style={styles.navControls}>
@@ -201,9 +207,9 @@ export default function OnboardingScreen() {
       return (
         <View style={styles.fullScreen}>
           <video
-            autoPlay
-            muted
-            playsInline
+            autoPlay={true}
+            muted={true}
+            playsInline={true}
             style={{
               width: '100%',
               height: '100%',
@@ -358,7 +364,7 @@ export default function OnboardingScreen() {
   if (step === 7) {
     return (
       <ImageBackground
-        source={require('../../assets/onboarding/allmind-tela6.png')}
+        source={require('../../assets/onboarding/allmind-tela4.png')}
         style={styles.fullScreen}
         resizeMode="cover"
       >
@@ -521,6 +527,14 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#3A5A6C',
     textAlign: 'center',
+  },
+  disclaimerText: {
+    color: '#FFFFFF',
+    fontSize: 10,
+    textAlign: 'center',
+    marginTop: 16,
+    opacity: 0.8,
+    paddingHorizontal: 40,
   },
   choiceContainer: {
     flex: 1,

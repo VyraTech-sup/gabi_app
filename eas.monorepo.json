@@ -1,0 +1,1 @@
+{"cli":{"version":">= 16.28.0","appVersionSource":"remote"},"build":{"development":{"projectRoot":"mobile","developmentClient":true,"distribution":"internal","android":{"buildType":"apk"}},"preview":{"projectRoot":"mobile","distribution":"internal"},"production":{"projectRoot":"mobile","autoIncrement":true}},"submit":{"production":{}}}

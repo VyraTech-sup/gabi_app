@@ -24,72 +24,17 @@ export interface AudioItem {
 /**
  * Lista oficial de áudios
  * Ordem definida pela especificação do produto
+ * IMPORTANTE: fileName deve corresponder exatamente ao nome do arquivo em assets/audio/
  */
 export const AUDIO_LIBRARY: AudioItem[] = [
-  {
-    id: '1',
-    title: 'Vença o Medo de Errar',
-    fileName: 'venca_medo_errar.opus', // Arquivo ainda não existe
-    order: 1,
-    active: false, // Desativado até o arquivo existir
-    description: 'Supere seus medos e liberte-se das amarras da insegurança'
-  },
-  {
-    id: '2',
-    title: 'Ative Fé e Autocura',
-    fileName: 'ativefeeautocura.mp3.opus',
-    order: 2,
-    active: true,
-    description: 'Fortaleça sua fé interior e ative o poder de autocura'
-  },
-  {
-    id: '3',
-    title: 'Elimine a Insônia',
-    fileName: 'elimineainsonia.mp3.opus',
-    order: 3,
-    active: true,
-    description: 'Relaxe profundamente e tenha uma noite de sono restaurador'
-  },
-  {
-    id: '4',
-    title: 'Vença a Ansiedade',
-    fileName: 'venca_ansiedade.opus', // Arquivo ainda não existe
-    order: 4,
-    active: false, // Desativado até o arquivo existir
-    description: 'Acalme sua mente e encontre paz interior'
-  },
-  {
-    id: '5',
-    title: 'Se Abra Para Mudanças',
-    fileName: 'seabraparamudanças.mp3.mp4',
-    order: 5,
-    active: true,
-    description: 'Libere-se de padrões antigos e abrace novas possibilidades'
-  },
-  {
-    id: '6',
-    title: 'Ative a Felicidade',
-    fileName: 'ativeafelicidade.mp3.m4a',
-    order: 6,
-    active: true,
-    description: 'Conecte-se com a alegria genuína e duradoura'
-  },
-  {
-    id: '7',
-    title: 'Fortaleça a Autoconfiança',
-    fileName: 'fortaleçaaautoconfiança.mp3.wav',
-    order: 7,
-    active: true,
-    description: 'Desenvolva confiança inabalável em si mesmo'
-  },
-  {
-    id: '8',
-    title: 'Acredite em Você',
-    fileName: 'acredite_em_voce.opus', // Arquivo ainda não existe
-    order: 8,
-    active: false, // Desativado até o arquivo existir
-    description: 'Desperte o poder que existe dentro de você'
-  },
+  { id: '1', title: 'Vencendo o Medo de Errar', fileName: 'vencendoomedodeerrar.mp3.mpeg', order: 1, active: true },
+  { id: '2', title: 'Meditação de Fé e Autoconfiança', fileName: 'ativefeeautocura.mp3.opus', order: 2, active: true },
+  { id: '3', title: 'Elimine a Insônia', fileName: 'elimineainsonia.mp3.opus', order: 3, active: true },
+  { id: '4', title: 'Reduzindo a Ansiedade', fileName: 'vencendoaansiedade.mp3.mp4', order: 4, active: true },
+  { id: '5', title: 'Se Abra Para Mudanças', fileName: 'seabraparamudanças.mp3.mp4', order: 5, active: true },
+  { id: '6', title: 'Ative a Felicidade', fileName: 'ativeafelicidade.mp3.m4a', order: 6, active: true },
+  { id: '7', title: 'Fortaleça a Autoconfiança', fileName: 'fortaleçaaautoconfiança.mp3.wav', order: 7, active: true },
+  { id: '8', title: 'Acredite em Você', fileName: 'acrediteemvocê.mp3.mpeg', order: 8, active: true },
 ];
 
 /**
@@ -112,16 +57,10 @@ export function getAudioById(id: string): AudioItem | undefined {
  * Retorna o caminho require() para o arquivo de áudio
  * Centraliza o mapeamento de arquivos
  */
-export function getAudioSource(fileName: string): any {
-  const audioSources: { [key: string]: any } = {
-    'ativefeeautocura.mp3.opus': require('../assets/ativefeeautocura.mp3.opus'),
-    'elimineainsonia.mp3.opus': require('../assets/elimineainsonia.mp3.opus'),
-    'seabraparamudanças.mp3.mp4': require('../assets/seabraparamudanças.mp3.mp4'),
-    'ativeafelicidade.mp3.m4a': require('../assets/ativeafelicidade.mp3.m4a'),
-    'fortaleçaaautoconfiança.mp3.wav': require('../assets/fortaleçaaautoconfiança.mp3.wav'),
-  };
-
-  return audioSources[fileName] || null;
+export function getAudioSource(fileName: string): number | null {
+  // Metro bundler não suporta requires dinâmicos em produção
+  // Retorna null - os arquivos de áudio devem ser carregados via URL
+  return null;
 }
 
 /**

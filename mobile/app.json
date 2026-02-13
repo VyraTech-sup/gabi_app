@@ -15,14 +15,12 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.vyratech.All Mind",
+      "bundleIdentifier": "com.vyratech.allmind",
       "buildNumber": "1",
       "infoPlist": {
         "UIBackgroundModes": [
-          "audio",
           "audio"
-        ],
-        "NSUserTrackingUsageDescription": "Este app não rastreia seus dados."
+        ]
       },
       "config": {
         "usesNonExemptEncryption": false
@@ -34,14 +32,10 @@
         "backgroundColor": "#3A5A6C"
       },
       "permissions": [
-        "WAKE_LOCK",
         "WAKE_LOCK"
       ],
       "package": "com.vyratech.allmind",
-      "versionCode": 1,
-      "minSdkVersion": 24,
-      "targetSdkVersion": 34,
-      "compileSdkVersion": 34
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png",
@@ -63,15 +57,14 @@
     },
     "extra": {
       "eas": {
-        "projectId": "db76ce10-369f-4780-95fc-113782270fe4"
-      }
+        "projectId": "7f055645-77e6-4435-88dd-cc7e4f084b45"
+      },
+      "privacyPolicyUrl": "https://allmindpp-dwyydjyk.manus.space"
     },
-    "owner": "vyratech",
-    "runtimeVersion": {
-      "policy": "appVersion"
-    },
+    "owner": "gabiartz",
+    "runtimeVersion": "1.0.0",
     "updates": {
-      "url": "https://u.expo.dev/db76ce10-369f-4780-95fc-113782270fe4"
+      "url": "https://u.expo.dev/7f055645-77e6-4435-88dd-cc7e4f084b45"
     }
   }
 }

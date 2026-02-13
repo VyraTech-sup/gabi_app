@@ -19,18 +19,10 @@
   - Texto compliance: renovação automática, cancelamento
   - Links para privacy e terms
 
-### 2. Compliance Legal (100% Completo)
-- ✅ Privacy Policy ([privacy.html](c:\dev\gabi_app\client\public\privacy.html))
-  - LGPD + GDPR compliant
-  - Política de assinatura e cancelamento
-  - Isenção médica
-  - Contatos DPO
-- ✅ Terms of Service ([terms.html](c:\dev\gabi_app\client\public\terms.html))
-  - Auto-renewal disclosure
-  - Refund policy
-  - Cancellation instructions (iOS + Android)
-  - Recursos de emergência (CVV 188, SAMU 192)
-- ✅ Deployed em produção: https://All Mind.vercel.app/privacy e /terms
+### 2. Compliance Legal (Pendente)
+- ⚠️ Privacy Policy precisa ser criada e hospedada em URL pública
+- ⚠️ Terms of Service precisam ser criados e hospedados em URL pública
+- ⚠️ URLs necessárias para submissão na App Store e Play Store
 
 ### 3. Configuração Técnica (100% Completo)
 - ✅ [app.json](c:\dev\gabi_app\mobile\app.json) compliance:
@@ -46,12 +38,7 @@
   - autoIncrement enabled
 - ✅ Zero erros de compilação (TypeScript + Expo Doctor)
 
-### 4. Web Deployment (100% Completo)
-- ✅ Vercel Production: https://dist-smoky-eta-61.vercel.app
-- ✅ Home page All Mind Story-first
-- ✅ Privacy e Terms hospedados
-
-### 5. Documentação (100% Completo)
+### 4. Documentação (100% Completo)
 - ✅ [PUBLICATION_CHECKLIST.md](c:\dev\gabi_app\PUBLICATION_CHECKLIST.md) - 500+ linhas
   - 10 seções detalhadas
   - 80+ itens rastreados
@@ -222,10 +209,10 @@ Android:
 
 ## 📞 SUPORTE PÓS-APROVAÇÃO
 
-### URLs Críticas (Já configuradas)
-- Privacy Policy: https://All Mind.vercel.app/privacy
-- Terms of Service: https://All Mind.vercel.app/terms
-- Website: https://dist-smoky-eta-61.vercel.app
+### URLs Críticas (Para configurar)
+- Privacy Policy: [Criar e hospedar em URL pública]
+- Terms of Service: [Criar e hospedar em URL pública]
+- Website: [Opcional]
 
 ### Contatos (Para atualizar nos consoles)
 - Support Email: support@vyratech.com
@@ -243,9 +230,7 @@ Android:
 3. [mobile/services/inAppPurchase.ts](c:\dev\gabi_app\mobile\services\inAppPurchase.ts) - Serviço IAP
 4. [mobile/screens/Profile/UnlockAll MindScreen.tsx](c:\dev\gabi_app\mobile\screens\Profile\UnlockAll MindScreen.tsx) - Paywall
 5. [mobile/contexts/AuthContext.tsx](c:\dev\gabi_app\mobile\contexts\AuthContext.tsx) - Subscription state
-6. [client/public/privacy.html](c:\dev\gabi_app\client\public\privacy.html) - Privacy Policy
-7. [client/public/terms.html](c:\dev\gabi_app\client\public\terms.html) - Terms of Service
-8. [PUBLICATION_CHECKLIST.md](c:\dev\gabi_app\PUBLICATION_CHECKLIST.md) - Checklist completo
+6. [PUBLICATION_CHECKLIST.md](c:\dev\gabi_app\PUBLICATION_CHECKLIST.md) - Checklist completo
 
 ### Comandos Importantes
 ```bash
@@ -260,9 +245,6 @@ eas build -p android --profile preview
 eas build -p ios --profile production
 eas build -p android --profile production
 
-# Deploy web
-cd client && vercel --prod
-
 # Validar IAP (após build)
 # iOS: Settings → Developer → Clear Sandbox Account
 # Android: Play Console → Internal Testing
@@ -276,13 +258,12 @@ O projeto All Mind está **tecnicamente pronto** para publicação nas lojas.
 
 **Todas as implementações internas foram concluídas:**
 - ✅ Monetização real com react-native-iap
-- ✅ Compliance legal (Privacy Policy + Terms)
 - ✅ Configuração técnica (build numbers, permissions)
 - ✅ Zero erros de compilação
-- ✅ Web deployment (privacy/terms hospedados)
 - ✅ Documentação completa
 
 **Os únicos itens pendentes são EXTERNOS:**
+- ⚠️ Criar e hospedar Privacy Policy e Terms of Service
 - ⚠️ Contratar Apple Developer Program ($99)
 - ⚠️ Contratar Google Play Developer ($25)
 - ⚠️ Configurar Product IDs nos consoles

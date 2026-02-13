@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Platform } from 'react-native';
 import { Audio } from 'expo-av';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -34,7 +34,11 @@ export default function AudioPlayerScreen({ route }: AudioPlayerScreenProps) {
   const audioTitle = audioData?.title || route?.params?.audioTitle || 'Áudio';
 
   useEffect(() => {
-    loadAudio();
+    if (Platform.OS === 'web') {
+      // web will use native <audio> element; no expo-av loading
+    } else {
+      loadAudio();
+    }
     return () => {
       if (sound) {
         sound.unloadAsync();
@@ -119,6 +123,26 @@ export default function AudioPlayerScreen({ route }: AudioPlayerScreenProps) {
     const seconds = totalSeconds % 60;
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
+
+  // If web, render a simple HTML audio player using the /assets/audio path
+  if (Platform.OS === 'web') {
+    const fileName = audioData?.fileName || route?.params?.audioFile || '';
+    const webSrc = `/assets/audio/${fileName}`;
+    return (
+      <View style={styles.container}>
+        <View style={styles.headerButtons}>
+          <TouchableOpacity style={styles.navButton} onPress={() => (navigation as any).goBack()}>
+            <Text style={{ color: theme.colors.text }}>Voltar</Text>
+          </TouchableOpacity>
+        </View>
+        <Text style={{ textAlign: 'center', color: theme.colors.text, marginTop: 120 }}>{audioTitle}</Text>
+        <View style={{ padding: 20 }}>
+          {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+          <audio src={webSrc} controls={true} playsInline={true} preload="metadata" style={{ width: '100%' }} />
+        </View>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>

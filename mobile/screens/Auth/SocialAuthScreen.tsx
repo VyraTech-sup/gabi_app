@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 
-export default function SocialAuthScreen({ navigation }) {
+export default function SocialAuthScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Vincule sua conta</Text>

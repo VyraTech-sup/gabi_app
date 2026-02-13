@@ -90,9 +90,10 @@ export default function SubscriptionScreen({ navigation }: SubscriptionScreenPro
   }, []);
 
   const confirmAndBuy = () => {
+    const selectedPlanData = plans.find(p => p.id === selectedPlan);
     Alert.alert(
-      '7 dias grátis',
-      'Você terá 7 dias grátis. Após o período, a cobrança será iniciada automaticamente. Deseja continuar?',
+      'Iniciar período de teste',
+      `Teste grátis por 7 dias.\n\nApós o período, você será cobrado ${selectedPlanData?.price}${selectedPlanData?.period}.\n\nCancele a qualquer momento nas configurações do seu dispositivo.\n\nDeseja continuar?`,
       [
         { text: 'Cancelar', style: 'cancel' },
         { text: 'Continuar', onPress: () => handleBuy() },
@@ -138,6 +139,35 @@ export default function SubscriptionScreen({ navigation }: SubscriptionScreenPro
         console.warn('Erro na compra:', e);
         Alert.alert('Erro', 'Erro ao processar compra. Tente novamente.');
       }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleRestore = async () => {
+    setIsLoading(true);
+    try {
+      const customerInfo = await Purchases.restorePurchases();
+      const entitlements = customerInfo?.entitlements?.active ?? {};
+      const keys = Object.keys(entitlements);
+      
+      if (keys.length > 0) {
+        const ent = entitlements[keys[0]];
+        await setSubscriptionData({
+          plan: ent.productIdentifier?.includes('year') ? 'yearly' : 'monthly',
+          status: 'active',
+          startDate: ent?.latestPurchaseDate ?? new Date().toISOString(),
+          endDate: ent?.expirationDate ?? undefined,
+        });
+        await setPremiumStatus(true);
+        Alert.alert('Sucesso', 'Assinatura restaurada com sucesso!');
+        navigation.goBack();
+      } else {
+        Alert.alert('Nenhuma compra encontrada', 'Não encontramos assinaturas ativas para restaurar.');
+      }
+    } catch (e: any) {
+      console.warn('Erro ao restaurar:', e);
+      Alert.alert('Erro', 'Não foi possível restaurar suas compras. Tente novamente.');
     } finally {
       setIsLoading(false);
     }
@@ -220,7 +250,7 @@ export default function SubscriptionScreen({ navigation }: SubscriptionScreenPro
               { icon: '🎧', text: 'Mais de 1.000 meditações guiadas' },
               { icon: '📚', text: 'Cursos completos de mindfulness' },
               { icon: '🌙', text: 'Histórias e sons para dormir melhor' },
-              { icon: '💆', text: 'Programas anti-ansiedade e estresse' },
+              { icon: '💆', text: 'Programas para relaxamento e equilíbrio' },
               { icon: '📥', text: 'Ouça offline, onde quiser' },
               { icon: '✨', text: 'Novos conteúdos semanalmente' },
             ].map((benefit, index) => (
@@ -239,12 +269,22 @@ export default function SubscriptionScreen({ navigation }: SubscriptionScreenPro
       <View style={styles.footer}>
         <Button
           title={isLoading ? 'Processando...' : 'Assinar agora'}
-          onPress={handleBuy}
+          onPress={confirmAndBuy}
           fullWidth={true}
+          disabled={isLoading}
         />
         <Text style={styles.footerText}>
           Cancele quando quiser. Sem taxas de cancelamento.
         </Text>
+        <TouchableOpacity 
+          onPress={handleRestore} 
+          disabled={isLoading}
+          style={styles.restoreButton}
+        >
+          <Text style={styles.restoreText}>
+            Restaurar Compras
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -419,5 +459,16 @@ const styles = StyleSheet.create({
     color: theme.colors.textSecondary,
     textAlign: 'center',
     marginTop: theme.spacing.sm,
+  },
+  restoreButton: {
+    paddingVertical: theme.spacing.md,
+    alignItems: 'center',
+    marginTop: theme.spacing.sm,
+  },
+  restoreText: {
+    fontSize: theme.typography.fontSize.sm,
+    color: theme.colors.primary,
+    fontWeight: theme.typography.fontWeight.medium,
+    textDecorationLine: 'underline',
   },
 });

@@ -1,64 +1,33 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ImageBackground, Linking } from 'react-native';
-import newTheme from './new_theme';
+import { theme } from '../../styles/theme';
 import Icon from '../../components/Icon';
 import Button from '../../components/Button';
 import { useAuth } from '../../contexts/AuthContext';
+import { getActiveAudios } from '../../data/audioLibrary';
 
 interface HomeScreenProps {
-  navigation: any;
+  navigation: {
+    navigate: (screen: string, params?: Record<string, unknown>) => void;
+  };
 }
 
-// Mock de Stories
-const todayStory = {
-  id: '1',
-  title: 'Auto Cura',
-  specialist: 'Gabriela Artz',
-  thumbnail: 'https://picsum.photos/seed/story1/600/800',
-  isLocked: false,
-};
-
-const watchedStories = [
-  {
-    id: '2',
-    title: 'Insônia',
-    specialist: 'Gabriela Artz',
-    thumbnail: 'https://picsum.photos/seed/story2/200/200',
-  },
-  {
-    id: '3',
-    title: 'Autoconfiança',
-    specialist: 'Gabriela Artz',
-    thumbnail: 'https://picsum.photos/seed/story3/200/200',
-  },
-  {
-    id: '4',
-    title: 'Felicidade',
-    specialist: 'Gabriela Artz',
-    thumbnail: 'https://picsum.photos/seed/story4/200/200',
-  },
-  {
-    id: '5',
-    title: 'Autocura',
-    specialist: 'Gabriela Artz',
-    thumbnail: 'https://picsum.photos/seed/story5/200/200',
-  },
-  {
-    id: '6',
-    title: 'Mentalidade e Mudanças',
-    specialist: 'Gabriela Artz',
-    thumbnail: 'https://picsum.photos/seed/story6/200/200',
-  },
-];
+// Use the canonical static audio list as the single source of truth for Home
+const activeAudios = getActiveAudios();
+const todayStory = activeAudios[0] || null;
+const watchedStories = activeAudios.slice(1);
 
 export default function HomeScreen({ navigation }: HomeScreenProps) {
   const { hasActiveSubscription, user } = useAuth();
 
-  const handleWatchStory = () => {
+  const handleWatchStory = (audioId?: string, audioTitle?: string) => {
     if (!hasActiveSubscription) {
-      // navigation.navigate('UnlockAll Mind');
-    } else {
-      // navigation.navigate('AudioPlayer', { audioId: '5', audioTitle: 'Auto Cura', audioFile: '5' });
+      // keep existing behavior (unlock flow)
+      return;
+    }
+
+    if (audioId) {
+      navigation.navigate('AudioPlayer', { audioId, audioTitle });
     }
   };
 
@@ -73,11 +42,11 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
         
         <View style={styles.headerRight}>
           <TouchableOpacity style={styles.notificationButton}>
-            <Icon name="bell" size={24} color={newTheme.colors.text} />
+            <Icon name="bell" size={24} color={theme.colors.text} />
           </TouchableOpacity>
           
           <TouchableOpacity style={styles.profileButton}>
-            <Icon name="user" size={24} color={newTheme.colors.text} />
+            <Icon name="user" size={24} color={theme.colors.text} />
           </TouchableOpacity>
         </View>
       </View>
@@ -85,24 +54,24 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
       {/* Banner de Trial Expirado */}
       {!hasActiveSubscription && (
         <View style={styles.trialExpiredBanner}>
-          <Icon name="lock" size={20} color={newTheme.colors.text} />
+          <Icon name="lock" size={20} color={theme.colors.text} />
           <Text style={styles.trialExpiredText}>Sua avaliação gratuita expirou</Text>
         </View>
       )}
 
       {/* Card Principal - Story do Dia */}
-      <ImageBackground source={{ uri: todayStory.thumbnail }} style={styles.storyCard} imageStyle={styles.storyCardImage}>
+      <ImageBackground source={{ uri: 'https://picsum.photos/seed/story1/600/800' }} style={styles.storyCard} imageStyle={styles.storyCardImage}>
         <View style={styles.storyOverlay}>
           {!hasActiveSubscription && (
             <View style={styles.storyBadge}><Text style={styles.storyBadgeText}>Story 1</Text></View>
           )}
           
           <View style={styles.storyContent}>
-            <Text style={styles.storyTitle}>{todayStory.title}</Text>
+            <Text style={styles.storyTitle}>{todayStory?.title || 'Story do Dia'}</Text>
             
-            <View style={styles.specialistPill}><Text style={styles.specialistText}>{todayStory.specialist}</Text></View>
+            <View style={styles.specialistPill}><Text style={styles.specialistText}>Gabriela Artz</Text></View>
             
-            <Button title="Assistir Story" onPress={handleWatchStory} variant="primary" size="large" style={styles.watchButton} />
+            <Button title="Ouvir" onPress={() => handleWatchStory(todayStory?.id, todayStory?.title)} variant="primary" size="large" style={styles.watchButton} />
           </View>
         </View>
       </ImageBackground>
@@ -113,12 +82,21 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
           <Text style={styles.watchedTitle}>Stories Assistidos</Text>
           {watchedStories.map((story) => (
             <View key={story.id} style={styles.watchedStoryItem}>
-              <ImageBackground source={{ uri: story.thumbnail }} style={styles.watchedThumbnail} imageStyle={styles.watchedThumbnailImage} />
+              <ImageBackground
+                source={{ uri: 'https://picsum.photos/seed/story'+story.id+'/200/200' }}
+                style={styles.watchedThumbnail}
+                imageStyle={styles.watchedThumbnailImage}
+              />
               <View style={styles.watchedStoryInfo}>
                 <Text style={styles.watchedStoryTitle}>{story.title}</Text>
-                <Text style={styles.watchedStorySpecialist}>{story.specialist}</Text>
+                <Text style={styles.watchedStorySpecialist}>Gabriela Artz</Text>
               </View>
-              <TouchableOpacity style={styles.rewatchButton}><Text style={styles.rewatchButtonText}>Assistir novamente</Text></TouchableOpacity>
+              <TouchableOpacity
+                style={styles.rewatchButton}
+                onPress={() => handleWatchStory(story.id, story.title)}
+              >
+                <Text style={styles.rewatchButtonText}>Ouvir</Text>
+              </TouchableOpacity>
             </View>
           ))}
         </View>
@@ -128,7 +106,14 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
       {!hasActiveSubscription && (
         <View style={styles.unlockCard}>
           <Text style={styles.unlockTitle}>Desbloqueie sua jornada completa em All Mind</Text>
-          <Button title="Assinar →" variant="primary" size="large" fullWidth={true} style={styles.unlockButton} />
+          <Button 
+            title="Assinar →" 
+            variant="primary" 
+            size="large" 
+            fullWidth={true} 
+            style={styles.unlockButton}
+            onPress={() => navigation.navigate('UnlockAlmaSense')}
+          />
         </View>
       )}
 
@@ -136,10 +121,10 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
       <TouchableOpacity style={styles.spotifyCard} onPress={() => Linking.openURL('https://open.spotify.com/show/seu-podcast')}>
         <Icon name="music" size={24} color="#1DB954" />
         <Text style={styles.spotifyText}>Ouça também no Spotify</Text>
-        <Icon name="external-link" size={20} color={newTheme.colors.textSecondary} />
+        <Icon name="external-link" size={20} color={theme.colors.textSecondary} />
       </TouchableOpacity>
 
-      <View style={{ height: newTheme.spacing['16'] }} />
+      <View style={{ height: 80 }} />
     </ScrollView>
   );
 }

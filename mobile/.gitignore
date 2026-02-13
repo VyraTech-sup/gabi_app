@@ -30,7 +30,8 @@ yarn-error.*
 .DS_Store
 *.pem
 
-# local env files
+# local env files (nunca commitar .env com chaves reais)
+.env
 .env*.local
 
 # typescript
@@ -39,3 +40,8 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# build artifacts (não commitar AAB/APK)
+builds/
+*.aab
+*.apk

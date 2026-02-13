@@ -20,7 +20,7 @@ export default function IntroScreen({ onFinish }: IntroScreenProps) {
       style={styles.background}
       resizeMode="cover"
     >
-      <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
+      <StatusBar barStyle="light-content" backgroundColor="transparent" translucent={true} />
     </ImageBackground>
   );
 }

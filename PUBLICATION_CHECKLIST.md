@@ -45,10 +45,10 @@
 
 | Item | Status | Bloqueia? | Detalhes |
 |------|--------|-----------|----------|
-| **Privacy Policy** | ✅ Completo | ❌ Sim | `client/public/privacy.html` (LGPD + GDPR) |
-| **Terms of Service** | ✅ Completo | ❌ Sim | `client/public/terms.html` |
-| **Privacy URL** | ✅ Completo | ❌ Sim | https://All Mind.vercel.app/privacy |
-| **Terms URL** | ✅ Completo | ❌ Sim | https://All Mind.vercel.app/terms |
+| **Privacy Policy** | ⚠️ Pendente | ❌ Sim | Criar privacy policy e hospedar em URL pública |
+| **Terms of Service** | ⚠️ Pendente | ❌ Sim | Criar terms of service e hospedar em URL pública |
+| **Privacy URL** | ⚠️ Pendente | ❌ Sim | URL pública necessária para App Store/Play Store |
+| **Terms URL** | ⚠️ Pendente | ❌ Sim | URL pública necessária para App Store/Play Store |
 | **Links no Paywall** | ✅ Completo | ❌ Sim | `UnlockAll MindScreen` |
 | **Auto-renewal disclosure** | ✅ Completo | ❌ Sim | Texto no paywall |
 | **Cancellation instructions** | ✅ Completo | ❌ Sim | iOS: Ajustes → Assinaturas, Android: Play Store |
@@ -160,26 +160,13 @@
 
 ---
 
-## 10. WEB DEPLOYMENT (COMPLEMENTAR)
-
-| Item | Status | Bloqueia? | Detalhes |
-|------|--------|-----------|----------|
-| **Vercel Production** | ✅ Completo | ⚠️ Opcional | https://dist-smoky-eta-61.vercel.app |
-| **Privacy page deployed** | ✅ Completo | ❌ Sim | https://All Mind.vercel.app/privacy |
-| **Terms page deployed** | ✅ Completo | ❌ Sim | https://All Mind.vercel.app/terms |
-| **Home page All Mind** | ✅ Completo | ⚠️ Opcional | Story-first design |
-
----
-
 ## 📊 RESUMO EXECUTIVO
 
-### ✅ COMPLETO (34 itens)
+### ✅ COMPLETO (30 itens)
 - Configuração técnica: Bundle IDs, versões, builds
 - Monetização: react-native-iap implementado, paywall compliance
-- Legal: Privacy Policy, Terms of Service, URLs
 - Permissões: iOS e Android minimalistas
 - EAS Build: Configurado e validado
-- Web: Vercel production com privacy/terms
 
 ### 🔄 EM ANDAMENTO (1 item)
 - Android Preview Build (EAS)
