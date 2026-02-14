@@ -62,9 +62,6 @@
       "privacyPolicyUrl": "https://allmindpp-dwyydjyk.manus.space"
     },
     "owner": "gabiartz",
-    "runtimeVersion": "1.0.0",
-    "updates": {
-      "url": "https://u.expo.dev/7f055645-77e6-4435-88dd-cc7e4f084b45"
-    }
+    "runtimeVersion": "1.0.0"
   }
 }

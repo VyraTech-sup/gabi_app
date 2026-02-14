@@ -1,17 +1,20 @@
-# Pastas do monorepo (quando o upload for da raiz)
-../server
-../drizzle
-../shared
-../expo
-../node_modules
-../.git
-
-# Reduzir tamanho do archive (build EAS)
+# Reduzir tamanho do archive para EAS Build
 builds/
 dist/
+archive-inspect/
+archive-inspect-after/
 assets/backup/
+.expo/
+.vercel/
+
+# Arquivos locais/sensíveis
+*.jks
+upload_certificate.pem
+
+# Documentação (mantém README)
 *.md
 !README.md
 
-# Bare workflow: não commitar cache do Gradle (expo doctor)
+# Bare workflow: evitar caches de build
 android/.gradle/
+android/app/build/

@@ -5,7 +5,10 @@
   "main": "index.js",
   "expo": {
     "install": {
-      "exclude": ["react-native-web", "typescript"]
+      "exclude": [
+        "react-native-web",
+        "typescript"
+      ]
     }
   },
   "scripts": {
@@ -54,6 +57,6 @@
     "eslint": "^8.57.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "typescript": "~5.3.3"
+    "typescript": "~5.9.2"
   }
 }

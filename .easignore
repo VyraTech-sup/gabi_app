@@ -8,7 +8,6 @@ node_modules/
 .git/
 *.md
 !mobile/README.md
-package-lock.json
 drizzle.config.ts
 tsconfig.json
 .expo/
