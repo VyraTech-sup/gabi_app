@@ -9,7 +9,9 @@
     }
   },
   "scripts": {
+    "postinstall": "node scripts/ensure-index.js",
     "eas-build-pre-install": "npm config set legacy-peer-deps true && node scripts/ensure-index.js",
+    "eas-build-post-install": "node scripts/ensure-index.js",
     "start": "expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",

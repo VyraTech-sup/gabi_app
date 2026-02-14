@@ -9,7 +9,7 @@ Lista de tudo que pode falhar ou gerar aviso no EAS, com status e como corrigir.
 | Problema | O que era | Status |
 |----------|------------|--------|
 | **runtimeVersion com policy no bare** | `"runtimeVersion": {"policy": "appVersion"}` não é suportado quando existe pasta `android/`. | ✅ Corrigido: `"runtimeVersion": "1.0.0"` (string fixa). |
-| **Entry point (index.js)** | EAS não acha o entry do Metro. | ✅ Verificado pelo pré-build; build sempre de `mobile/`. |
+| **Entry point (index.js)** | EAS não acha o entry do Metro. | ✅ `postinstall` + hooks EAS rodam `scripts/ensure-index.js` e criam `index.js` se faltar; build sempre de `mobile/`. |
 | **projectId / updates.url** | OTA updates apontando para projeto errado. | ✅ `extra.eas.projectId` e `updates.url` com `7f055645-...`. |
 | **owner / conta** | Build na conta errada ou AAB incompatível. | ✅ `owner: gabiartz`; rodar `eas whoami` antes. |
 | **Assets obrigatórios** | icon, splash, adaptive-icon, favicon. | ✅ Verificado pelo pré-build. |
@@ -88,10 +88,24 @@ Por existir a pasta `android/` (e possivelmente `ios/`), o projeto é **bare wor
 
 ---
 
-## 7. Referências
+## 7. Ver o que vai no archive (diagnóstico)
+
+Se o build falhar na fase "Bundle JavaScript" (ex.: "Unable to resolve module .../index.js"), confira o que realmente foi enviado:
+
+```bash
+cd mobile
+eas build:inspect --platform android --stage archive --output ./archive-inspect
+```
+
+Depois abra `./archive-inspect` e verifique se existe `index.js` na raiz (ou em `mobile/index.js` se o archive for o repo todo). Assim você confirma se o arquivo está no tarball.
+
+---
+
+## 8. Referências
 
 - [EAS Build – Build configuration](https://docs.expo.dev/build-reference/build-configuration)
 - [EAS Build – Troubleshooting](https://docs.expo.dev/build-reference/troubleshooting)
 - [Runtime versions (OTA)](https://docs.expo.dev/eas-update/runtime-versions)
 - Doc local: `GESTAO_DE_RISCO_BUILD.md`
 - **Gestão de risco por ponto:** `GESTAO_RISCO_EAS_POR_PONTO.md` (cada fator de sucesso do build com risco e mitigação)
+- [EAS Build – Build archive](https://expo.fyi/eas-build-archive) (o que entra no tarball)
